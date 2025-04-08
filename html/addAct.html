@@ -8,6 +8,73 @@
         <div class="container" id= "welcome_msg">
             <h2>Formulario Actividades</h2>
         </div>
-        <script src="../js/func_aux.js"></script>
+        <div class="container" id = "form_container">
+            <form class = "formulario" action ="">
+                <!--Donde?-->
+                <div id="region-input" class="grupo-input">
+                <label for="region">Region</label>
+                <input id="region" name="region" type="region" required>
+                </div>
+
+                <div id="comuna-input" class="grupo-input">
+                <label for="comuna">Comuna</label>
+                <input id="comuna" name="comuna" type="comuna" required>
+                </div>
+
+                <div id="sector-input" class="grupo-input">
+                <label for="sector">Sector</label>
+                <input id="sector" name="sector" type="sector" required>
+                </div>
+                <!--Quien?-->
+                <div id="name-input" class="grupo-input">
+                    <label for="name">Nombre</label>
+                    <input id="name" name="name" type="name" required>
+                </div>
+                <div id="mail-input" class="grupo-input">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" required>
+                </div>
+                <div id="cel-input" class="grupo-input">
+                    <label for="cel">Celular</label>
+                    <input id="cel" name="cel" type="cel" required>
+                </div>
+                <div id="contact-input" class="grupo-input">
+                    <label for="contact">Tipo de Contacto</label>
+                    <input id="contact" name="contact" type="contact" required>
+                </div>
+                <!--De que trata?-->
+                <div id="date-input" class="grupo-input">
+                    <label for="date">Fecha-Hora Inicio</label>
+                    <input id="date" name="date" type="datetime-local" required value ="2025-04-06T15:30">
+                </div>
+                <div id="end-input" class="grupo-input">
+                    <label for="end">Fecha-Hora Fin</label>
+                    <input id="end" name="end" type="datetime-local" required value ="2025-04-06T18:30">
+                </div>
+                <div id="desc-input" class="grupo-input">
+                    <label for="desc">Descripción</label>
+                    <input id="desc" name="desc" type="desc" required>
+                </div>
+                <div id="topic-input" class="grupo-input">
+                    <label for="topic">Tema</label>
+                    <input id="topic" name="topic" type="topic" required>
+                </div>
+                <div id="pic-input" class="grupo-input">
+                    <label for="pic">Foto</label>
+                    <input id="pic" name="pic" type="file" accept="image/*" required>
+                    <button id="more-pic" name="more-pic" onclick="add-file-input()">Agregar otra foto</button>
+                </div>
+                <!--ENVIO-->
+                <div class="botones">
+                    <button type="button" id="envio" onclick="validarForm()">
+                      Agregar esta actividad
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="container" id= "action_buttons">
+            <button id="index-button">Inicio</button>
+        </div>
+        <script src="../js/form_act_scr.js"></script>
     </body>
 </html>

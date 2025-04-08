@@ -6,8 +6,33 @@
     </head>
     <body>
         <div class="container" id= "welcome_msg">
-            <h2>Estadisticas de Actividades</h2>
+            <h2>Beauchef Activities</h2>
         </div>
-        <script src="../js/func_aux.js"></script>
+        <div class="container" id="stats-container">
+            <h2>Estadisticas de Actividades</h2>
+
+            <div class="container" id="title-containers" style = "display:flex;flex-direction: row; 
+            justify-content: space-around;">
+                <h3>Actividades por dia</h3>
+                <h3>Distribución tematica</h3>
+                <h3>Distribución horaria</h3>
+            </div>
+            <div class="chart-container" id="graph_container">
+                <div class="chart-wrapper">
+                    <canvas id="graph_lin"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="graph_cake"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="graph_bar"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="button-container" id= "action_buttons">
+            <button id="index-button">Inicio</button>
+        </div>
+        <script src="../js/stats_scr.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </body>
 </html>

@@ -8,6 +8,72 @@
         <div class="container" id= "welcome_msg">
             <h2>Lista de Actividades</h2>
         </div>
-        <script src="../js/func_aux.js"></script>
+        <div class="table-container" id="table-container">
+            <table border="1" class="table">
+                <thead>
+                    <tr>
+                        <th>Inicio</th>
+                        <th>Termino</th>
+                        <th>Comuna</th>
+                        <th>Sector</th>
+                        <th>Tema</th>
+                        <th>Nombre Organizador</th>
+                        <th>Total fotos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id = "fila1" onclick="select_fila(this)">
+                        <td>2025-04-06<br>12:00</td>
+                        <td>2025-04-06<br>15:00</td>
+                        <td>Santiago</td>
+                        <td>R.E.P.O</td>
+                        <td>Juegos</td>
+                        <td>Andrés Bravo</td>
+                        <td>5</td>
+                    </tr>
+                    <tr id = "fila2" onclick="select_fila(this)">
+                        <td>2025-05-05<br>11:00</td>
+                        <td>2025-05-05<br>16:00</td>
+                        <td>Santiago</td>
+                        <td>R.E.P.O</td>
+                        <td>Juegos</td>
+                        <td>George</td>
+                        <td>5</td>
+                    </tr>
+                    <tr id = "fila3" onclick="select_fila(this)">
+                        <td>2025-06-04<br>10:00</td>
+                        <td>2025-06-04<br>17:00</td>
+                        <td>Santiago</td>
+                        <td>R.E.P.O</td>
+                        <td>Juegos</td>
+                        <td>Dante</td>
+                        <td>5</td>
+                    </tr>
+                    <tr id = "fila4" onclick="select_fila(this)">
+                        <td>2025-07-03<br>09:00</td>
+                        <td>2025-07-03<br>18:00</td>
+                        <td>Santiago</td>
+                        <td>R.E.P.O</td>
+                        <td>Juegos</td>
+                        <td>Tom</td>
+                        <td>5</td>
+                    </tr>
+                    <tr id = "fila5" onclick="select_fila(this)">
+                        <td>2025-08-02<br>08:00</td>
+                        <td>2025-08-02<br>19:00</td>
+                        <td>Santiago</td>
+                        <td>R.E.P.O</td>
+                        <td>Juegos</td>
+                        <td>Nik</td>
+                        <td>5</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="container" id= "action_buttons">
+            <button id="index-button">Inicio</button>
+        </div>
+        <script src="../js/list_scr.js"></script>
     </body>
 </html>

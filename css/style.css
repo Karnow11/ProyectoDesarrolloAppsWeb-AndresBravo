@@ -1,0 +1,27 @@
+.chart-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    left: 10%;
+    border: 5px;
+    border-color: black;
+}
+.container{
+    align-items: center;
+    text-align: center;
+    border: 10px solid black;
+}
+.table-container{
+    border:10px solid black;
+    text-align: center;
+}
+.table{
+    width:100%;
+    text-align: center;
+}
+.button-container{
+    align-items: center;
+    text-align: center;
+}
