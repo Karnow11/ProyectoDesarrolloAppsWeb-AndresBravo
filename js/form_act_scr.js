@@ -136,6 +136,8 @@ function addPicSelect(button){
     }
 }
 
+
+
 document.addEventListener('DOMContentLoaded', cargarRegion)
 const select_region = document.getElementById("region_select")
 select_region.addEventListener("change",cargarComunas)
@@ -172,8 +174,23 @@ more_pic_button.addEventListener("click",function(){
 })
 
 const add_act = document.getElementById("envio")
-add_act.addEventListener("click",function(){
-    alert("¿Está seguro que desea agregar esta actividad?")
+add_act.addEventListener("click",() =>{
+    Swal.fire({
+        tittle: "Confirmación",
+        text: "¿Está seguro que desea agregar esta actividad?",
+        icon: "question",
+        confirmButtonText: "Si, estoy seguro",
+        cancelButtonText: "No, no estoy seguro, quiero volver al formulario",
+        showCancelButton: true,
+
+    }).then((result) =>{
+        if(result.isConfirmed){
+            Swal.fire("Hemos recibido su información, muchas gracias y suerte en su actividad").then((result) =>{
+                window.location.href = "index.html"
+            })
+        }
+    })
 })
+
 
 
