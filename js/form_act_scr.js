@@ -186,6 +186,7 @@ add_act.addEventListener("click",() =>{
     }).then((result) =>{
         if(result.isConfirmed){
             Swal.fire("Hemos recibido su información, muchas gracias y suerte en su actividad").then((result) =>{
+                
                 window.location.href = "index.html"
             })
         }
