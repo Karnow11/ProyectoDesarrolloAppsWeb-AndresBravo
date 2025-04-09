@@ -12,35 +12,73 @@
             <form class = "formulario" action ="">
                 <!--Donde?-->
                 <div id="region-input" class="grupo-input">
-                <label for="region">Region</label>
-                <input id="region" name="region" type="region" required>
+                    <label for="region">Region</label>
+                    <select name="region" required id="region_select">
+                        <option value="-1" disabled selected> --Seleccione una región-- </option>
+                    </select>
                 </div>
 
                 <div id="comuna-input" class="grupo-input">
-                <label for="comuna">Comuna</label>
-                <input id="comuna" name="comuna" type="comuna" required>
+                    <label for="comuna">Comuna</label>
+                    <select name="comuna" required id="comuna_select">
+                        <option value="" disabled selected> --Seleccione una comuna-- </option>
+                    </select>
                 </div>
 
                 <div id="sector-input" class="grupo-input">
-                <label for="sector">Sector</label>
-                <input id="sector" name="sector" type="sector" required>
+                    <label for="sector">Sector</label>
+                    <textarea id="sector" name="sector" type="text" maxlength="100" style="height: 50px;"></textarea>
                 </div>
                 <!--Quien?-->
                 <div id="name-input" class="grupo-input">
                     <label for="name">Nombre</label>
-                    <input id="name" name="name" type="name" required>
+                    <input id="name" name="name" type="text" maxlength="200" required>
                 </div>
                 <div id="mail-input" class="grupo-input">
                     <label for="email">Email</label>
-                    <input id="email" name="email" type="email" required>
+                    <input id="email" name="email" type="email" maxlength="100" required>
                 </div>
                 <div id="cel-input" class="grupo-input">
                     <label for="cel">Celular</label>
-                    <input id="cel" name="cel" type="cel" required>
+                    <input id="cel" name="cel" type="tel">
                 </div>
                 <div id="contact-input" class="grupo-input">
                     <label for="contact">Tipo de Contacto</label>
-                    <input id="contact" name="contact" type="contact" required>
+                    <div id="pin_contact" class ="pin_contact">
+                        <div id="wsp_box" class ="wsp_box">
+                            <input type="checkbox" id="wsp_checkbox" name="options" value="option1" title="Whatsapp">
+                            <label for="contact">Whatsapp</label>
+                            <br>
+                        </div>
+                        <div id="tele_box" class ="tele_box">
+                            <input type="checkbox" id="tele_checkbox" name="options" value="option1">
+                            <label for="contact">Telegram</label>
+                            <br>
+                        </div>
+                        <div id="x_box" class ="x_box">
+                            <input type="checkbox" id="x_checkbox" name="options" value="option1">
+                            <label for="contact">X</label>
+                            <br>
+                        </div>
+
+                        <div id="inst_box" class ="inst_box">
+                            <input type="checkbox" id="inst_checkbox" name="options" value="option1">
+                            <label for="contact">Instagram</label>
+                            <br>
+                        </div>
+                        <div id="tik_box" class ="tik_box">
+                            <input type="checkbox" id="tik_checkbox" name="options" value="option1">
+                            <label for="contact">Tiktok</label>
+                            <br>
+                        </div>
+                        <div id="other_box" class ="other_box">
+                            <input type="checkbox" id="other_checkbox" name="options" value="option1">
+                            <label for="contact">Otra</label>
+                            <br>
+                        </div>
+                        
+                    </div>
+                    
                 </div>
                 <!--De que trata?-->
                 <div id="date-input" class="grupo-input">
@@ -49,20 +87,32 @@
                 </div>
                 <div id="end-input" class="grupo-input">
                     <label for="end">Fecha-Hora Fin</label>
-                    <input id="end" name="end" type="datetime-local" required value ="2025-04-06T18:30">
+                    <input id="end" name="end" type="datetime-local" value ="2025-04-06T18:30">
                 </div>
                 <div id="desc-input" class="grupo-input">
                     <label for="desc">Descripción</label>
-                    <input id="desc" name="desc" type="desc" required>
+                    <textarea id="desc" name="desc" cols ="50" rows="10"></textarea>
                 </div>
                 <div id="topic-input" class="grupo-input">
                     <label for="topic">Tema</label>
-                    <input id="topic" name="topic" type="topic" required>
+                    <select name="comuna" required id="comuna_select">
+                        <option value="" disabled selected> --Seleccione un tema-- </option>
+                        <option value="musica">Música</option>
+                        <option value="deporte">Deporte</option>
+                        <option value="ciencias">Ciencias</option>
+                        <option value="religion">Religión</option>
+                        <option value="politica">Política</option>
+                        <option value="tecnologia">Tecnología</option>
+                        <option value="juegos">Juegos</option>
+                        <option value="baile">Baile</option>
+                        <option value="comida">Comida</option>
+                        <option value="other">Otro</option>
+                    </select>
                 </div>
                 <div id="pic-input" class="grupo-input">
                     <label for="pic">Foto</label>
                     <input id="pic" name="pic" type="file" accept="image/*" required>
-                    <button id="more-pic" name="more-pic" onclick="add-file-input()">Agregar otra foto</button>
+                    <button id="more-pic" name="more-pic">Agregar otra foto</button>
                 </div>
                 <!--ENVIO-->
                 <div class="botones">

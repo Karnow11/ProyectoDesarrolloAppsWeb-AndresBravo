@@ -2,7 +2,6 @@ function cargarTabla(){
     var datos = JSON.parse(localStorage.getItem("datos_fila"))
     console.log(datos.region)
     if(datos){
-        console.log(datos.region)
         var contenido = [datos.region,datos.comuna,datos.sector,datos.nombre,datos.mail,datos.cel,datos.tipo,datos.inicio,
         datos.fin,datos.desc,datos.tema]
         var tabla = document.getElementById("tabla_agregadora_donde").getElementsByTagName('tbody')[0]
