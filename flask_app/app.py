@@ -43,7 +43,7 @@ def register():
             return render_template("auth/register.html")
 
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/index", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form.get("username")
@@ -62,13 +62,13 @@ def login():
 
         print(error)
 
-        return render_template("auth/login.html",error=error)
+        return render_template("html/index.html",error=error)
     
     elif request.method == "GET":
         if session.get("user", None):
             return redirect(url_for("index"))
         else:
-            return render_template("auth/login.html")
+            return render_template("html/index.html")
 
 @app.route("/logout", methods=["GET"])
 def logout():

@@ -5,8 +5,32 @@ CREATE DATABASE IF NOT EXISTS appsWeb_db DEFAULT CHARACTER SET utf8 COLLATE utf8
 -- Darle permisos al usuario
 GRANT ALL ON appWeb_db.* TO dbadmin@localhost;
 USE `appsWeb_db` ;
--- Crear Tabla de usuarios
+-- Crear Tabla de actividades
 CREATE TABLE actividad(
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+
+-- Crear Tabla de temas
+CREATE TABLE actividad__tema(
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+
+-- Crear Tabla de contactos
+CREATE TABLE contactar_por(
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+
+-- Crear Tabla de archivos
+CREATE TABLE archivo(
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
