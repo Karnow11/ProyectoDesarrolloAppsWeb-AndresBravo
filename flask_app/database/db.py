@@ -1,9 +1,9 @@
 import pymysql
 import json
 
-DB_NAME = "confessions_db"
-DB_USERNAME = "dbadmin" #cc5002
-DB_PASSWORD = "dbadmin" #programacionweb
+DB_NAME = "tarea2"
+DB_USERNAME = "cc5002" #cc5002
+DB_PASSWORD = "programacionweb" #programacionweb
 DB_HOST = "localhost"
 DB_PORT = 3306
 DB_CHARSET = "utf8"
@@ -53,12 +53,19 @@ def create_user(username, password, email):
 	cursor.execute(QUERY_DICT["create_user"], (username, password, email))
 	conn.commit()
 
-def get_confessions(page_size):
+def get_act(page_size):
 	conn = get_conn()
 	cursor = conn.cursor()
-	cursor.execute(QUERY_DICT["get_confessions"], (page_size,))
-	confessions = cursor.fetchall()
-	return confessions
+	cursor.execute(QUERY_DICT["get_act"], (page_size,))
+	act = cursor.fetchall()
+	return act
+
+def get_tema_by_id(id):
+	conn = get_conn()
+	cursor = conn.cursor()
+	cursor.execute(QUERY_DICT["get_tema_by_id"], (id,))
+	tema = cursor.fetchall()
+	return tema
 
 def create_confession(conf_text, conf_img, user_id):
 	conn = get_conn()

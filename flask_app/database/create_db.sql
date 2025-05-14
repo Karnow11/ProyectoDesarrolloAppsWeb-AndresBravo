@@ -1,47 +1,40 @@
--- Active: 1747187032312@@127.0.0.1@3306@mysql
+-- Active: 1747187032312@@127.0.0.1@3306@tarea2
 -- Crear Base de datos
-CREATE DATABASE IF NOT EXISTS appsWeb_db DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS tarea2 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- Darle permisos al usuario
 GRANT ALL ON appWeb_db.* TO dbadmin@localhost;
-USE `appsWeb_db` ;
+USE `tarea2` ;
 -- Crear Tabla de actividades
 CREATE TABLE actividad(
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(255) NOT NULL,
+  sector VARCHAR(255) NOT NULL,
+  nombre VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL
+  celular VARCHAR(255) NOT NULL,
+  inicio DATETIME NOT NULL,
+  fin DATETIME NOT NULL,
+  descripcion VARCHAR(255) NOT NULL,
+  region VARCHAR(255) NOT NULL,
+  comuna VARCHAR(255) NOT NULL
 );
 
 -- Crear Tabla de temas
 CREATE TABLE actividad__tema(
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL
+  tema VARCHAR(255) NOT NULL
 );
 
 -- Crear Tabla de contactos
 CREATE TABLE contactar_por(
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL
+  tipo VARCHAR(255) NOT NULL,
+  contacto VARCHAR(255) NOT NULL
 );
 
 -- Crear Tabla de archivos
+--Guarda la ruta del archivo
 CREATE TABLE archivo(
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL
-);
-
--- Crear Tabla de Confesiones
-CREATE TABLE confesiones(
-  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  conf_text VARCHAR(255) NOT NULL,
-  conf_img VARCHAR(255) NOT NULL,
-  user_id BIGINT UNSIGNED NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
+  imagen VARCHAR(255) NOT NULL
 );
