@@ -70,6 +70,18 @@
                         <td>Juegos</td>
                         <td><img src="../media/nikagachadocomosiempre.png" width="320" height="240"></td>
                     </tr>
+                    {% if data%}
+                        {% for act in data%}
+                            <tr>
+                                <td>{{data.Inicio}}</td>
+                                <td>{{data.Termino}}</td>
+                                <td>{{data.Comuna}}</td>
+                                <td>{{data.Sector}}</td>
+                                <td>{{data.Tema}}</td>
+                                <td><img src = "{{data.path_image}}" width ="320" height ="240"></td>
+                            </tr>
+                        {% endfor%}
+                    {% endif%}
                 </tbody>
             </table>
         </div>

@@ -95,8 +95,11 @@ def index():
 
         img_filename = f"uploads/{foto1}"
         data.append({
-            "author": username,
-            "content": conf_text,
+            "inicio": inicio,
+            "termino": termino,
+            "comuna": comuna,
+            "sector": sector,
+            "tema": tema,
             "path_image": url_for('static', filename=img_filename)
         })
     
