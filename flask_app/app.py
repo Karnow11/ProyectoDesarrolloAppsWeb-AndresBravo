@@ -16,12 +16,35 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 
 # --- Auth Routes ---
-@app.route("/register", methods=["GET", "POST"])
-def register():
+@app.route("/addAct", methods=["GET", "POST"])
+def addAct():
     if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("contrasenna")
+        region = request.form.get("region")
+        comuna = request.form.get("comuna")
+        sector = request.form.get("sector")
+        name = request.form.get("name")
         email = request.form.get("email")
+        celular = request.form.get("cel")
+        #para el contacto revisar los seleccionados
+        seleccionados = request.form.getlist('contactos') #['1','2','3','4','5','6']
+        detalles = {}
+
+        for opcion in seleccionados:
+            detalle = request.form.get(f'{opcion}_input')
+            detalles[opcion] = detalle
+        #Ya tenemos los tipos de contacto jeje
+        inicio = request.form.get("date")
+        fin = request.form.get("fin")
+        descripcion = request.form.get("desc")
+        tema = request.form.get("tema")
+        #Intentamos capturar las fotos
+        fotos = {}
+        recibidos = request.files.getlist("pic") # Una lista con los files
+        for img in recibidos:
+            if img and img.filename != "":
+                img.save(f"./uploads/{img.filename}")
+
+        #-----------------------------------------------------------------
         error = ""
         if validate_register_user(username, password, email):
             # try to register user
@@ -37,10 +60,7 @@ def register():
         return render_template("auth/register.html", error=error)
     
     elif request.method == "GET":
-        if session.get("user", None):
-            return redirect(url_for("index"))
-        else:
-            return render_template("auth/register.html")
+        return render_template("html/addAct.html")
 
 
 @app.route("/index", methods=["GET", "POST"])

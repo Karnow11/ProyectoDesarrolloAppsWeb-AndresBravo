@@ -109,7 +109,7 @@ function addTextInput(checkbox){
         let input = document.createElement("input")
         /* <input id="name" name="name" type="text" maxlength="200" required>*/
         input.type = "text"
-        input.id = checkbox.id + "_input"
+        input.id = checkbox.value + "_input"
         input.name = input.id
         input.maxLength = 50
         input.minLength = 4
