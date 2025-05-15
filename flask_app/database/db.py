@@ -75,6 +75,27 @@ def create_confession(conf_text, conf_img, user_id):
 	
 
 # -- db-related functions --
+#Nuevo
+def register_act(region, comuna, sector, name, email, celular, contact_detalle, 
+                                          inicio, fin, descripcion, tema):
+	conn = get_conn()
+	cursor = conn.cursor()
+	cursor.execute(QUERY_DICT["register_act"], (name, email, celular, inicio, fin, descripcion, region, comuna, sector))
+	cursor.execute(QUERY_DICT["register_tema"], (id, tema))
+	for contact in contact_detalle[0]:
+		if contact == '1':
+			cursor.execute(QUERY_DICT["register_contact"], (id, 'Whatsapp', contact_detalle[contact]))
+		if contact == '2':
+			cursor.execute(QUERY_DICT["register_contact"], (id, 'Telegram', contact_detalle[contact]))
+		if contact == '3':
+			cursor.execute(QUERY_DICT["register_contact"], (id, 'X', contact_detalle[contact]))
+		if contact == '4':
+			cursor.execute(QUERY_DICT["register_contact"], (id, 'Instagram', contact_detalle[contact]))
+		if contact == '5':
+			cursor.execute(QUERY_DICT["register_contact"], (id, 'Tiktok', contact_detalle[contact]))
+		if contact == '6':
+			cursor.execute(QUERY_DICT["register_contact"], (id, 'Otro', contact_detalle[contact]))
+	conn.commit()
 
 def register_user(username, password, email):
 	# 1. check the email is not in use

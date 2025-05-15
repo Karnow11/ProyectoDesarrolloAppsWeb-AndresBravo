@@ -50,3 +50,7 @@ def validate_conf_img(conf_img):
 
 def validate_confession(conf_text, conf_img):
     return validate_conf_text(conf_text) and validate_conf_img(conf_img)
+
+#-------------------------------------------------------------------------
+def validate_add_act(region, comuna, name, email, inicio, fin, tema, fotos):
+    return True

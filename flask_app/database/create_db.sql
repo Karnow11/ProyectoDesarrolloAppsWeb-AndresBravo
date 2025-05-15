@@ -8,7 +8,6 @@ USE `tarea2` ;
 -- Crear Tabla de actividades
 CREATE TABLE actividad(
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  sector VARCHAR(255) NOT NULL,
   nombre VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   celular VARCHAR(255) NOT NULL,
@@ -16,7 +15,8 @@ CREATE TABLE actividad(
   fin DATETIME NOT NULL,
   descripcion VARCHAR(255) NOT NULL,
   region VARCHAR(255) NOT NULL,
-  comuna VARCHAR(255) NOT NULL
+  comuna VARCHAR(255) NOT NULL,
+  sector VARCHAR(255) NOT NULL
 );
 
 -- Crear Tabla de temas

@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, session
-from utils.validations import validate_login_user, validate_register_user, validate_confession
+from utils.validations import validate_login_user, validate_register_user, validate_confession, validate_add_act
 from database import db
 from werkzeug.utils import secure_filename
 import hashlib
@@ -16,6 +16,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 
 # --- Auth Routes ---
+#--------------------------------------------------------------------------------------------------
+#Nuevo
 @app.route("/addAct", methods=["GET", "POST"])
 def addAct():
     if request.method == "POST":
@@ -46,22 +48,18 @@ def addAct():
 
         #-----------------------------------------------------------------
         error = ""
-        if validate_register_user(username, password, email):
+        if validate_add_act(region, comuna, name, email, inicio, fin, tema, fotos):
             # try to register user
-            status, msg = db.register_user(username, password, email)
-            if status:
-                # set user field in session
-                session["user"] = username
-                return redirect(url_for("index"))
-            error += msg
+            status, msg = db.register_act(region, comuna, sector, name, email, celular, detalles, 
+                                          inicio, fin, descripcion, tema)
         else:
             error += "Uno de los campos no es valido."
 
-        return render_template("auth/register.html", error=error)
+        return render_template("html/addAct.html", error=error)
     
     elif request.method == "GET":
         return render_template("html/addAct.html")
-
+#-----------------------------------------------------------------------------------
 
 @app.route("/index", methods=["GET", "POST"])
 def login():
