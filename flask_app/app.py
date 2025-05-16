@@ -98,27 +98,23 @@ def logout():
 # --- Routes ---
 @app.route("/", methods=["GET"])
 def index():
-    #user = session.get("user", None)
-    #if not user:
-        #return redirect(url_for("login"))
-    
     # get last confessions 
     data = []
     for act in db.get_act(page_size=5):
         id, sector, _, _, _, inicio, termino, _, _, comuna = act
-        tema = db.get_tema_by_id(id)
-        foto1 = db.get_photo_by_id(id)
+        #tema = db.get_tema_by_id(id)
+        #foto1 = db.get_photo_by_id(id)
         
         ### CHECKPOINT 
 
-        img_filename = f"uploads/{foto1}"
+        #img_filename = f"uploads/{foto1}"
         data.append({
             "inicio": inicio,
             "termino": termino,
             "comuna": comuna,
             "sector": sector,
-            "tema": tema,
-            "path_image": url_for('static', filename=img_filename)
+        #    "tema": tema,
+        #    "path_image": url_for('static', filename=img_filename)
         })
     
     return render_template("html/index.html", data=data)
