@@ -60,41 +60,6 @@ def addAct():
     elif request.method == "GET":
         return render_template("html/addAct.html")
 #-----------------------------------------------------------------------------------
-
-@app.route("/index", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("contrasenna")
-        error = ""
-        if validate_login_user(username, password):
-            # try to login
-            status, msg = db.login_user(username, password)
-            if status:
-                # set user field in session
-                session["user"] = username
-                return redirect(url_for("index"))
-            error += msg
-        else:
-            error += "Uno de los campos no es valido."
-
-        print(error)
-
-        return render_template("html/index.html",error=error)
-    
-    elif request.method == "GET":
-        if session.get("user", None):
-            return redirect(url_for("index"))
-        else:
-            return render_template("html/index.html")
-
-@app.route("/logout", methods=["GET"])
-def logout():
-    session.pop("user", None)
-    return redirect(url_for("login"))
-
-
-
 # --- Routes ---
 @app.route("/", methods=["GET"])
 def index():
@@ -102,50 +67,33 @@ def index():
     data = []
     for act in db.get_act(page_size=5):
         id, sector, _, _, _, inicio, termino, _, _, comuna = act
-        #tema = db.get_tema_by_id(id)
-        #foto1 = db.get_photo_by_id(id)
+        tema = db.get_tema_by_id(id)
+        foto1 = db.get_photo_by_id(id)
         
         ### CHECKPOINT 
 
-        #img_filename = f"uploads/{foto1}"
+        img_filename = f"uploads/{foto1}"
         data.append({
             "inicio": inicio,
             "termino": termino,
             "comuna": comuna,
             "sector": sector,
-        #    "tema": tema,
-        #    "path_image": url_for('static', filename=img_filename)
+            "tema": tema,
+            "path_image": url_for('static', filename=img_filename)
         })
     
     return render_template("html/index.html", data=data)
+    
+@app.route("/list", methods = ["GET"])
+def list():
+    if request.method == "GET":
+        return render_template("html/list.html")
 
-@app.route("/post-conf", methods=["POST"])
-def post_conf():
-    username = session.get("user", None)
-    if username is None:
-        return redirect(url_for("login"))
-
-    conf_text = request.form.get("conf-text")
-    conf_img = request.files.get("conf-img")
-
-    if validate_confession(conf_text, conf_img):
-        # 1. generate random name for img
-        _filename = hashlib.sha256(
-            secure_filename(conf_img.filename) # nombre del archivo
-            .encode("utf-8") # encodear a bytes
-            ).hexdigest()
-        _extension = filetype.guess(conf_img).extension
-        img_filename = f"{_filename}.{_extension}"
-
-        # 2. save img as a file
-        conf_img.save(os.path.join(app.config["UPLOAD_FOLDER"], img_filename))
-
-        # 3. save confession in db
-        user_id, _, _, _ = db.get_user_by_username(username)
-        db.create_confession(conf_text, img_filename, user_id)
-
-    return redirect(url_for("index"))
-
+@app.route("/stats", methods = ["GET"])
+def stats():
+    if request.method == "GET":
+        return render_template("html/stats.html")
+    
 
 if __name__ == "__main__":
     app.run(debug=True)

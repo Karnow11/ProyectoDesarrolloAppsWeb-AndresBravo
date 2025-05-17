@@ -1,20 +1,27 @@
 document.addEventListener("DOMContentLoaded", function(){
     const boton_add = document.getElementById("addActivities-button");
     boton_add.addEventListener("click", function(){
-        window.location.href = "addAct.html"
+        const url = "{{url_for('addAct')}}"
+        window.location.href = url
     })
+
     const boton_list = document.getElementById("listActivities-button");
     boton_list.addEventListener("click", function(){
-        window.location.href = "list.html"
+        const url2 = "{{url_for('list')}}"
+        window.location.href = url2
     })
+
     const boton_stats = document.getElementById("stats-button");
     boton_stats.addEventListener("click", function(){
-        window.location.href = "stats.html"
+        const url3 = "{{url_for('stats')}}"
+        window.location.href = url3
     })
-    const boton_index = document.getElementById("index-button");
-    boton_index.addEventListener("click", function(){
-        window.location.href = "index.html"
-    })
+
+    //const boton_index = document.getElementById("index-button");
+    //boton_index.addEventListener("click", function(){
+    //    const url4 = "{{url_for('index')}}"
+    //    window.location.href = url4
+    //})
 })
 
 function select_fila(fila){

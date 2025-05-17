@@ -2,7 +2,7 @@
 <html lang ="es">
     <head>
         <title> Beauchef Activities</title>
-        <link rel="stylesheet" type ="text/css" href="../../static/css/style.css"></link>
+        <link rel="stylesheet" type ="text/css" href="{{url_for('static', filename = 'css/style.css')}}"></link>
     </head>
     <body>
         <div class="container" id= "logo">
@@ -36,7 +36,7 @@
                         <td>Santiago</td>
                         <td>R.E.P.O</td>
                         <td>Juegos</td>
-                        <td><img src="../media/memori.png" width="320" height="240"></td>
+                        <td><img src="../../static/media/memori.png" width="320" height="240"></td>
                     </tr>
                     <tr>
                         <td>2025-05-05<br>11:00</td>
@@ -44,7 +44,7 @@
                         <td>Santiago</td>
                         <td>R.E.P.O</td>
                         <td>Juegos</td>
-                        <td><img src="../media/JorgeisDead.png" width="320" height="240"></td>
+                        <td><img src="../../static/media/JorgeisDead.png" width="320" height="240"></td>
                     </tr>
                     <tr>
                         <td>2025-06-04<br>10:00</td>
@@ -52,7 +52,7 @@
                         <td>Santiago</td>
                         <td>R.E.P.O</td>
                         <td>Juegos</td>
-                        <td><img src="../media/Dantetrabajen.png" width="320" height="240"></td>
+                        <td><img src="../../static/media/Dantetrabajen.png" width="320" height="240"></td>
                     </tr>
                     <tr>
                         <td>2025-07-03<br>09:00</td>
@@ -60,7 +60,7 @@
                         <td>Santiago</td>
                         <td>R.E.P.O</td>
                         <td>Juegos</td>
-                        <td><img src="../media/tomdead.png" width="320" height="240"></td>
+                        <td><img src="../../static/media/tomdead.png" width="320" height="240"></td>
                     </tr>
                     <tr>
                         <td>2025-08-02<br>08:00</td>
@@ -68,12 +68,25 @@
                         <td>Santiago</td>
                         <td>R.E.P.O</td>
                         <td>Juegos</td>
-                        <td><img src="../media/nikagachadocomosiempre.png" width="320" height="240"></td>
+                        <td><img src="../../static/media/nikagachadocomosiempre.png" width="320" height="240"></td>
                     </tr>
+                    {% if data%}
+                        <script>console.log("Pasó el if data")</script>
+                        {% for act in data%}
+                            <tr>
+                                <td>{{act.inicio}}</td>
+                                <td>{{act.termino}}</td>
+                                <td>{{act.comuna}}</td>
+                                <td>{{act.sector}}</td>
+                                <td>{{act.tema}}</td>
+                                <td><img src="{{act.path_image}}" width="320" height="240"></td>
+                            </tr>
+                        {% endfor%}
+                    {% endif %}
                 </tbody>
             </table>
         </div>
-        <script src="../js/func_aux.js"></script>
+        <script src="{{url_for('static', filename ='js/func_aux.js')}}"></script>
     </body>
 
 </html>
