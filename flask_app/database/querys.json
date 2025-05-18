@@ -8,8 +8,9 @@
     "get_tema_by_id": "SELECT tema FROM actividad_tema WHERE id = %s",
     "get_photo_by_id": "SELECT ruta_archivo FROM foto WHERE id = %s",
     "get_comuna_by_id":"SELECT nombre FROM comuna WHERE id = %s",
+    "get_id_by_every": "SELECT id FROM actividad WHERE comuna = %s AND sector = %s AND nombre = %s AND email = %s AND celular = %s AND dia_hora_inicio = %s AND dia_hora_termino = %s AND descripcion = %s LIMIT 1;",
     
-    "register_act": "INSERT INTO actividad (name, email, celular, inicio, fin, descripcion, region, comuna, sector) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);",
+    "register_act": "INSERT INTO actividad (comuna, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);",
     "register_tema": "INSERT INTO actividad_tema (id, tema) VALUES (%s, %s);",
     "register_contact": "INSERT INTO confesiones (id, tipo, detalle) VALUES (%s, %s, %s);"
 }

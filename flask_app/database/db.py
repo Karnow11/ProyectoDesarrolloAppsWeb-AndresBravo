@@ -94,7 +94,9 @@ def register_act(region, comuna, sector, name, email, celular, contact_detalle,
                                           inicio, fin, descripcion, tema):
 	conn = get_conn()
 	cursor = conn.cursor()
-	cursor.execute(QUERY_DICT["register_act"], (name, email, celular, inicio, fin, descripcion, region, comuna, sector))
+	comuna = cursor.execute(QUERY_DICT["get_comuna_id"], (comuna))
+	cursor.execute(QUERY_DICT["register_act"], (comuna, sector, name, email, celular, inicio, fin, descripcion))
+	id = cursor.execute(QUERY_DICT["get_id_by_every"], (comuna, sector, name, email, celular, inicio, fin, descripcion))
 	cursor.execute(QUERY_DICT["register_tema"], (id, tema))
 	for contact in contact_detalle[0]:
 		if contact == '1':

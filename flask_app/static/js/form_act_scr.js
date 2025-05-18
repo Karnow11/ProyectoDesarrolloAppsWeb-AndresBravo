@@ -23,7 +23,7 @@ const agregarAct = () => {
     confessionForm.submit();
 };
 
-let submit_addAct_Btn = document.getElementById("submit-conf-btn");
+let submit_addAct_Btn = document.getElementById("envio");
 submit_addAct_Btn.addEventListener("click", agregarAct);
 
 let region_comuna = {
@@ -111,7 +111,6 @@ function cargarComunas(){
     region = region.value
     iteracion = iteracion + 1
     if(region === "-1"){
-
         return
     }
     var select = document.getElementById("comuna_select")
@@ -172,21 +171,33 @@ const tik_checkbox = document.getElementById("tik_checkbox")
 const other_checkbox = document.getElementById("other_checkbox")
 
 wsp_checkbox.addEventListener("change", function(){
+    const anterior = document.getElementById(wsp_checkbox.value+'_input')
+    if (anterior) anterior.remove()
     addTextInput(wsp_checkbox)
 })
 tele_checkbox.addEventListener("change", function(){
+    const anterior = document.getElementById(tele_checkbox.value+'_input')
+    if (anterior) anterior.remove()
     addTextInput(tele_checkbox)
 })
 x_checkbox.addEventListener("change", function(){
+    const anterior = document.getElementById(x_checkbox.value+'_input')
+    if (anterior) anterior.remove()
     addTextInput(x_checkbox)
 })
 inst_checkbox.addEventListener("change", function(){
+    const anterior = document.getElementById(inst_checkbox.value+'_input')
+    if (anterior) anterior.remove()
     addTextInput(inst_checkbox)
 })
 tik_checkbox.addEventListener("change", function(){
+    const anterior = document.getElementById(tik_checkbox.value+'_input')
+    if (anterior) anterior.remove()
     addTextInput(tik_checkbox)
 })
 other_checkbox.addEventListener("change", function(){
+    const anterior = document.getElementById(other_checkbox.value+'_input')
+    if (anterior) anterior.remove()
     addTextInput(other_checkbox)
 })
 

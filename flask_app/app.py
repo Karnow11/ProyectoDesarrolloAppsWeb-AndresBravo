@@ -44,7 +44,16 @@ def addAct():
         recibidos = request.files.getlist("pic") # Una lista con los files
         for img in recibidos:
             if img and img.filename != "":
-                img.save(f"./uploads/{img.filename}")
+                #img.save(f"./uploads/{img.filename}")
+                # 1. generate random name for img
+                #conf_img = request.files.get("conf-img")
+                _filename = hashlib.sha256(
+                    secure_filename(img.filename) # nombre del archivo
+                    .encode("utf-8") # encodear a bytes
+                    ).hexdigest()
+                _extension = filetype.guess(img).extension
+                img_filename = f"{_filename}.{_extension}"
+                img.save(os.path.join(app.config["UPLOAD_FOLDER"], img_filename))
 
         #-----------------------------------------------------------------
         error = ""
