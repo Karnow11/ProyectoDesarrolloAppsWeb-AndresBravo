@@ -2,14 +2,14 @@
 <html lang ="es">
     <head>
         <title> Beauchef Activities</title>
-        <link rel="stylesheet" type ="text/css" href="../css/style.css"></link>
+        <link rel="stylesheet" type ="text/css" href="{{url_for('static', filename = 'css/style.css')}}"></link>
     </head>
     <body>
         <div class="container" id= "welcome_msg">
             <h2>Formulario Actividades</h2>
         </div>
         <div class="container" id = "form_container">
-            <form class = "formulario" action ="">
+            <form class = "formulario" action ="{{url_for('addAct')}}" id = "act-form" method = "post" enctype = "multipart/form-data">
                 <!--Donde?-->
                 <div id="region-input" class="grupo-input">
                     <label for="region">Region</label>
@@ -125,7 +125,10 @@
         <div class="container" id= "action_buttons">
             <button id="index-button">Inicio</button>
         </div>
-        <script src="../js/form_act_scr.js"></script>
+        <script> const ROUTES = {
+            index: "{{url_for('index')}}"
+        }</script>
+        <script src="{{url_for('static', filename ='js/form_act_scr.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 </html>

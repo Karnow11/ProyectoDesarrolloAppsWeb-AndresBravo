@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function(){
     const boton_index = document.getElementById("index-button");
     boton_index.addEventListener("click", function(){
-        window.location.href = "index.html"
+        const url3 = "{{url_for('index')}}"
+        window.location.href = ROUTES.index;
     })
 })
 
@@ -94,6 +95,7 @@ function cargarComunas(){
         return
     }
     var select = document.getElementById("comuna_select")
+    select.length = 1
     for(let comuna in region_comuna.regiones[region].comunas){
         var opcion = document.createElement("option")
         opcion.value = region_comuna.regiones[region].comunas[comuna].id
@@ -186,8 +188,8 @@ add_act.addEventListener("click",() =>{
     }).then((result) =>{
         if(result.isConfirmed){
             Swal.fire("Hemos recibido su información, muchas gracias y suerte en su actividad").then((result) =>{
-                
-                window.location.href = "index.html"
+                const url3 = "{{url_for('index')}}"
+                window.location.href = ROUTES.index;
             })
         }
     })

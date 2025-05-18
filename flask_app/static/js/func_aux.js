@@ -2,19 +2,19 @@ document.addEventListener("DOMContentLoaded", function(){
     const boton_add = document.getElementById("addActivities-button");
     boton_add.addEventListener("click", function(){
         const url = "{{url_for('addAct')}}"
-        window.location.href = url
+        window.location.href = ROUTES.addAct;
     })
 
     const boton_list = document.getElementById("listActivities-button");
     boton_list.addEventListener("click", function(){
         const url2 = "{{url_for('list')}}"
-        window.location.href = url2
+        window.location.href = ROUTES.list;
     })
 
     const boton_stats = document.getElementById("stats-button");
     boton_stats.addEventListener("click", function(){
         const url3 = "{{url_for('stats')}}"
-        window.location.href = url3
+        window.location.href = ROUTES.stats;
     })
 
     //const boton_index = document.getElementById("index-button");

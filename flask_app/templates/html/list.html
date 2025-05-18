@@ -2,7 +2,7 @@
 <html lang ="es">
     <head>
         <title> Beauchef Activities</title>
-        <link rel="stylesheet" type ="text/css" href="../css/style.css"></link>
+        <link rel="stylesheet" type ="text/css" href="{{url_for('static', filename = 'css/style.css')}}"></link>
     </head>
     <body>
         <div class="container" id= "welcome_msg">
@@ -74,6 +74,6 @@
         <div class="container" id= "action_buttons">
             <button id="index-button">Inicio</button>
         </div>
-        <script src="../js/list_scr.js"></script>
+        <script src="{{url_for('static', filename ='js/list_scr.js')}}"></script>
     </body>
 </html>
