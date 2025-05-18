@@ -1,3 +1,4 @@
+//Boton de inicio
 document.addEventListener("DOMContentLoaded", function(){
     const boton_index = document.getElementById("index-button");
     boton_index.addEventListener("click", function(){
@@ -5,6 +6,25 @@ document.addEventListener("DOMContentLoaded", function(){
         window.location.href = ROUTES.index;
     })
 })
+
+//Boton de envio del form
+//////////////////////////
+const validadorAct = (info) => {
+    return true
+}
+
+const agregarAct = () => {
+    let info = 'patata'
+    let isValid = validadorAct(info);
+    if (!isValid) {
+        return;
+    }
+    let confessionForm = document.getElementById("act-form");
+    confessionForm.submit();
+};
+
+let submit_addAct_Btn = document.getElementById("submit-conf-btn");
+submit_addAct_Btn.addEventListener("click", agregarAct);
 
 let region_comuna = {
     "regiones": [

@@ -5,8 +5,9 @@
     "create_act": "INSERT INTO usuarios (username, password, email) VALUES (%s, %s, %s);",
 
     "get_act": "SELECT * FROM actividad ORDER BY id DESC LIMIT %s;",
-    "get_tema_by_id": "SELECT tema FROM actividad__tema WHERE id = %s",
-    "get_photo_by_id": "SELECT imagen FROM archivo WHERE id = %s",
+    "get_tema_by_id": "SELECT tema FROM actividad_tema WHERE id = %s",
+    "get_photo_by_id": "SELECT ruta_archivo FROM foto WHERE id = %s",
+    "get_comuna_by_id":"SELECT nombre FROM comuna WHERE id = %s",
     
     "register_act": "INSERT INTO actividad (name, email, celular, inicio, fin, descripcion, region, comuna, sector) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);",
     "register_tema": "INSERT INTO actividad_tema (id, tema) VALUES (%s, %s);",

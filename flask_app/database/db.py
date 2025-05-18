@@ -74,6 +74,13 @@ def get_photo_by_id(id):
 	tema = cursor.fetchall()
 	return tema
 
+def get_comuna_by_id(id):
+	conn = get_conn()
+	cursor = conn.cursor()
+	cursor.execute(QUERY_DICT["get_comuna_by_id"], (id,))
+	comuna = cursor.fetchall()
+	return comuna
+
 def create_confession(conf_text, conf_img, user_id):
 	conn = get_conn()
 	cursor = conn.cursor()

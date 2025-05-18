@@ -66,7 +66,9 @@ def index():
     # get last confessions 
     data = []
     for act in db.get_act(page_size=5):
-        id, sector, _, _, _, inicio, termino, _, _, comuna = act
+        id, comuna, sector, _, _, _, inicio, termino, _ = act
+        comuna = db.get_comuna_by_id(comuna)
+        comuna = comuna[0][0]
         tema = db.get_tema_by_id(id)
         foto1 = db.get_photo_by_id(id)
         
