@@ -5,7 +5,7 @@
     "create_act": "INSERT INTO usuarios (username, password, email) VALUES (%s, %s, %s);",
 
     "get_act": "SELECT * FROM actividad ORDER BY id DESC LIMIT %s;",
-    "get_tema_by_id": "SELECT tema FROM actividad_tema WHERE id = %s",
+    "get_tema_by_id": "SELECT tema FROM actividad_tema WHERE actividad_id = %s",
     "get_photo_by_id": "SELECT ruta_archivo FROM foto WHERE id = %s",
     "get_comuna_by_id":"SELECT nombre FROM comuna WHERE id = %s",
     "get_comuna_id":"SELECT id FROM comuna WHERE nombre = %s AND region_id = %s",

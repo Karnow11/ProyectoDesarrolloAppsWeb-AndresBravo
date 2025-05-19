@@ -81,9 +81,8 @@ def index():
         id, comuna, sector, _, _, _, inicio, termino, _ = act
         comuna = db.get_comuna_by_id(comuna)
         comuna = comuna[0][0]
-        tema = db.get_tema_by_id(id)
+        tema = db.get_tema_by_id(id)[0][0]
         foto1 = db.get_photo_by_id(id)
-        
         ### CHECKPOINT 
 
         img_filename = f"uploads/{foto1}"
