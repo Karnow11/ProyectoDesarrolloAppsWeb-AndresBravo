@@ -22,7 +22,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def addAct():
     if request.method == "POST":
         region = request.form.get("region")
+        print(f' ESTA ES LA REGION SELECCIONADA: {region}')
         comuna = request.form.get("comuna")
+        print(f' ESTA ES LA COMUNA : {comuna}')
         sector = request.form.get("sector")
         name = request.form.get("name")
         email = request.form.get("email")
@@ -36,7 +38,7 @@ def addAct():
             detalles[opcion] = detalle
         #Ya tenemos los tipos de contacto jeje
         inicio = request.form.get("date")
-        fin = request.form.get("fin")
+        fin = request.form.get("end")
         descripcion = request.form.get("desc")
         tema = request.form.get("tema")
         #Intentamos capturar las fotos
@@ -58,13 +60,14 @@ def addAct():
         #-----------------------------------------------------------------
         error = ""
         if validate_add_act(region, comuna, name, email, inicio, fin, tema, fotos):
-            # try to register user
-            status, msg = db.register_act(region, comuna, sector, name, email, celular, detalles, 
+            # try to register act
+            db.register_act(region, comuna, sector, name, email, celular, detalles, 
                                           inicio, fin, descripcion, tema)
+            return render_template("html/index.html")
         else:
             error += "Uno de los campos no es valido."
-
-        return render_template("html/addAct.html", error=error)
+            return render_template("html/addAct.html", error=error)
+        
     
     elif request.method == "GET":
         return render_template("html/addAct.html")

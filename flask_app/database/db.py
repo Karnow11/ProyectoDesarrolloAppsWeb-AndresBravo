@@ -90,27 +90,28 @@ def create_confession(conf_text, conf_img, user_id):
 
 # -- db-related functions --
 #Nuevo
-def register_act(region, comuna, sector, name, email, celular, contact_detalle, 
-                                          inicio, fin, descripcion, tema):
+def register_act(region, comuna, sector, name, email, celular, contact_detalle, inicio, fin, descripcion, tema):
 	conn = get_conn()
 	cursor = conn.cursor()
-	comuna = cursor.execute(QUERY_DICT["get_comuna_id"], (comuna))
 	cursor.execute(QUERY_DICT["register_act"], (comuna, sector, name, email, celular, inicio, fin, descripcion))
-	id = cursor.execute(QUERY_DICT["get_id_by_every"], (comuna, sector, name, email, celular, inicio, fin, descripcion))
-	cursor.execute(QUERY_DICT["register_tema"], (id, tema))
-	for contact in contact_detalle[0]:
+	cursor.execute(QUERY_DICT["get_id_by_every"], (comuna, sector, name, email, celular, inicio, fin, descripcion))
+	id = cursor.fetchone()
+	id = id[0]
+	print(f'ESTE ES EL MALDITO ID: {id}')
+	cursor.execute(QUERY_DICT["register_tema"], (tema.lower(), "Algo", id))
+	for contact in contact_detalle:
 		if contact == '1':
-			cursor.execute(QUERY_DICT["register_contact"], (id, 'Whatsapp', contact_detalle[contact]))
+			cursor.execute(QUERY_DICT["register_contact"], ('whatsapp', contact_detalle[contact], id))
 		if contact == '2':
-			cursor.execute(QUERY_DICT["register_contact"], (id, 'Telegram', contact_detalle[contact]))
+			cursor.execute(QUERY_DICT["register_contact"], ('telegram', contact_detalle[contact], id))
 		if contact == '3':
-			cursor.execute(QUERY_DICT["register_contact"], (id, 'X', contact_detalle[contact]))
+			cursor.execute(QUERY_DICT["register_contact"], ('X', contact_detalle[contact], id))
 		if contact == '4':
-			cursor.execute(QUERY_DICT["register_contact"], (id, 'Instagram', contact_detalle[contact]))
+			cursor.execute(QUERY_DICT["register_contact"], ('instagram', contact_detalle[contact], id))
 		if contact == '5':
-			cursor.execute(QUERY_DICT["register_contact"], (id, 'Tiktok', contact_detalle[contact]))
+			cursor.execute(QUERY_DICT["register_contact"], ('tiktok', contact_detalle[contact], id))
 		if contact == '6':
-			cursor.execute(QUERY_DICT["register_contact"], (id, 'Otro', contact_detalle[contact]))
+			cursor.execute(QUERY_DICT["register_contact"], ('otra', contact_detalle[contact], id))
 	conn.commit()
 
 def register_user(username, password, email):
