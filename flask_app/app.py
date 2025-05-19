@@ -63,7 +63,7 @@ def addAct():
             # try to register act
             db.register_act(region, comuna, sector, name, email, celular, detalles, 
                                           inicio, fin, descripcion, tema)
-            return render_template("html/index.html")
+            return index()
         else:
             error += "Uno de los campos no es valido."
             return render_template("html/addAct.html", error=error)
@@ -100,7 +100,25 @@ def index():
 @app.route("/list", methods = ["GET"])
 def list():
     if request.method == "GET":
-        return render_template("html/list.html")
+        # get last confessions 
+        data = []
+        for act in db.get_act(page_size=10):
+            id, comuna, sector, organizador, _, _, inicio, termino, _ = act
+            comuna = db.get_comuna_by_id(comuna)
+            comuna = comuna[0][0]
+            tema = db.get_tema_by_id(id)[0][0]
+
+            ### CHECKPOINT 
+            data.append({
+                "inicio": inicio,
+                "termino": termino,
+                "comuna": comuna,
+                "sector": sector,
+                "tema": tema,
+                "organizador": organizador,
+                "total_fotos": 1
+            })
+        return render_template("html/list.html", data = data)
 
 @app.route("/stats", methods = ["GET"])
 def stats():
