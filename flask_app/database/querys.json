@@ -10,7 +10,8 @@
     "get_comuna_by_id":"SELECT nombre FROM comuna WHERE id = %s",
     "get_comuna_id":"SELECT id FROM comuna WHERE nombre = %s AND region_id = %s",
     "get_id_by_every": "SELECT id FROM actividad WHERE comuna_id = %s AND sector = %s AND nombre = %s AND email = %s AND celular = %s AND dia_hora_inicio = %s AND dia_hora_termino = %s AND descripcion = %s LIMIT 1;",
-    
+    "get_temas": "SELECT * FROM actividad_tema",
+
     "register_act": "INSERT INTO actividad (comuna_id, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);",
     "register_tema": "INSERT INTO actividad_tema (tema, glosa_otro, actividad_id) VALUES (%s, %s, %s);",
     "register_contact": "INSERT INTO contactar_por (nombre, identificador, actividad_id) VALUES (%s, %s, %s);"

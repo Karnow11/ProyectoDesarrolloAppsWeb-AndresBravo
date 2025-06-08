@@ -158,3 +158,54 @@ fetch("http://127.0.0.1:5000/get-stats-data-1")
     });
   })
   .catch((error) => console.error("Error:", error));
+
+  //CREAMOS EL GRAFICO 2
+  Highcharts.chart("container2", {
+  chart: {
+    type: "pie",
+  },
+  title: {
+    text: "Distribución de temas",
+  },
+  legend: {
+    align: "left",
+    verticalAlign: "top",
+    borderWidth: 0,
+  },
+
+  tooltip: {
+    shared: true,
+    crosshairs: true,
+  },
+
+  series: [
+    {
+      name: "Cantidad",
+      colorByPoint: true,
+      data: [],
+    },
+  ],
+});
+
+fetch("http://127.0.0.1:5000/get-stats-data-2")
+  .then((response) => response.json())
+  .then((data) => {
+    const pieData = data.map(item => ({
+      name: item.tema,
+      y: item.count
+    }));
+    // Get the chart by ID
+    const chart = Highcharts.charts.find(
+      (chart) => chart && chart.renderTo.id === "container2"
+    );
+
+    // Update the chart with new data
+    chart.update({
+      series: [
+        {
+          data: pieData,
+        },
+      ],
+    });
+  })
+  .catch((error) => console.error("Error:", error));

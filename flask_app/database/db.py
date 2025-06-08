@@ -133,6 +133,14 @@ def create_confession(conf_text, conf_img, user_id):
 	cursor = conn.cursor()
 	cursor.execute(QUERY_DICT["create_confession"], (conf_text, conf_img, user_id))
 	conn.commit()
+
+def get_temas():
+	session = SessionLocal()
+	conn = get_conn()
+	cursor = conn.cursor()
+	cursor.execute(QUERY_DICT["get_temas"])
+	temas = cursor.fetchall()
+	return temas
 	
 
 # -- db-related functions --

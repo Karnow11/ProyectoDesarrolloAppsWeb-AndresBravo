@@ -124,6 +124,7 @@ def stats():
     if request.method == "GET":
         return render_template("html/stats.html")
 
+#RUTA CREACION GRAFICO LINEA
 @app.route("/get-stats-data-1", methods = ["GET"])
 @cross_origin(origin= "127.0.0.1", supports_credentials = True)
 def get_stats_data_1():
@@ -138,6 +139,23 @@ def get_stats_data_1():
             data[inicio_str] = 1
     #Convertimos el diccionario
     data_2 = [{"date": fecha, "count": count} for fecha, count in sorted(data.items())]
+
+    return jsonify(data_2)
+
+#RUTA CREACION GRAFICO TORTA
+@app.route("/get-stats-data-2", methods = ["GET"])
+@cross_origin(origin= "127.0.0.1", supports_credentials = True)
+def get_stats_data_2():
+    #Grafico 2
+    data = {}
+    for tema in db.get_temas():
+        id, tema_actual, glosa_otro, actividad_id = tema
+        if tema_actual in data:
+            data[tema_actual] += 1
+        else:
+            data[tema_actual] = 1
+    #Convertimos el diccionario
+    data_2 = [{"tema": tema, "count": count} for tema, count in sorted(data.items())]
 
     return jsonify(data_2)
 
