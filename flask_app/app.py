@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, redirect, url_for, session
+from flask import Flask, request, render_template, redirect, url_for, session, jsonify
+from flask_cors import cross_origin
 from utils.validations import validate_login_user, validate_register_user, validate_confession, validate_add_act
 from database import db
 from werkzeug.utils import secure_filename
@@ -9,8 +10,6 @@ import os
 UPLOAD_FOLDER = 'static/uploads'
 
 app = Flask(__name__)
-
-
 app.secret_key = "s3cr3t_k3y"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
@@ -124,7 +123,23 @@ def list():
 def stats():
     if request.method == "GET":
         return render_template("html/stats.html")
-    
+
+@app.route("/get-stats-data-1", methods = ["GET"])
+@cross_origin(origin= "127.0.0.1", supports_credentials = True)
+def get_stats_data_1():
+    #Grafico 1
+    data = {}
+    for act in db.get_act(page_size=1000):
+        id, comuna, sector, organizador, _, _, inicio, termino, _ = act
+        inicio_str = inicio.date().strftime("%Y-%m-%d")
+        if inicio_str in data:
+            data[inicio_str] += 1
+        else:
+            data[inicio_str] = 1
+    #Convertimos el diccionario
+    data_2 = [{"date": fecha, "count": count} for fecha, count in sorted(data.items())]
+
+    return jsonify(data_2)
 
 if __name__ == "__main__":
     app.run(debug=True)

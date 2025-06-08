@@ -1,5 +1,8 @@
 import pymysql
 import json
+from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey
+from sqlalchemy.orm import sessionmaker, declarative_base, relationship
+
 
 DB_NAME = "tarea2"
 DB_USERNAME = "cc5002" #cc5002
@@ -8,9 +11,45 @@ DB_HOST = "localhost"
 DB_PORT = 3306
 DB_CHARSET = "utf8"
 
+DATABASE_URL = f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+engine = create_engine(DATABASE_URL, echo=False, future=True)
+
+SessionLocal = sessionmaker(bind=engine)
+
+Base = declarative_base()
+
 with open('database/querys.json', 'r') as querys:
 	QUERY_DICT = json.load(querys)
 
+#------------------------------------------------------------Models--------------------------------------------------------------------------
+class Comentario(Base):
+	__tablename__ = 'comentarios'
+
+	id = Column(BigInteger, primary_key = True, autoincrement = True)
+	com_text = Column(String(255), nullable = False)
+	author_name = Column(String(255), nullable = False)
+	actividad_id = Column(BigInteger, ForeignKey('Actividad.id'), nullable = False)
+
+	actividad = relationship("Actividad", back_populates = "comentarios")
+
+
+class Actividad(Base):
+	__tablename__ = 'actividades'
+
+	id = Column(BigInteger, primary_key = True, autoincrement = True)
+	comuna = Column(String(255), nullable = False)
+	sector = Column(String(255), nullable = False)
+	nombre = Column(String(255), nullable = False)
+	email = Column(String(255), nullable = False)
+	celular = Column(String(255), nullable = False)
+	fecha_inicio = Column(String(255), nullable = False)
+	fecha_fin = Column(String(255), nullable = False)
+	descripcion = Column(String(255), nullable = False)
+
+	actividad = relationship("Comentario", back_populates = "actividades")
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
 # -- conn ---
 
 def get_conn():
@@ -27,6 +66,7 @@ def get_conn():
 # -- querys --
 
 def get_user_by_id(id):
+	session = SessionLocal()
 	conn = get_conn()
 	cursor = conn.cursor()
 	cursor.execute(QUERY_DICT["get_user_by_id"], (id,))
@@ -34,6 +74,7 @@ def get_user_by_id(id):
 	return user
 
 def get_user_by_email(email):
+	session = SessionLocal()
 	conn = get_conn()
 	cursor = conn.cursor()
 	cursor.execute(QUERY_DICT["get_user_by_email"], (email,))
@@ -41,6 +82,7 @@ def get_user_by_email(email):
 	return user
 
 def get_user_by_username(username):
+	session = SessionLocal()
 	conn = get_conn()
 	cursor = conn.cursor()
 	cursor.execute(QUERY_DICT["get_user_by_username"], (username,))
@@ -54,6 +96,7 @@ def create_user(username, password, email):
 	conn.commit()
 
 def get_act(page_size):
+	session = SessionLocal()
 	conn = get_conn()
 	cursor = conn.cursor()
 	cursor.execute(QUERY_DICT["get_act"], (page_size,))
@@ -61,6 +104,7 @@ def get_act(page_size):
 	return act
 
 def get_tema_by_id(id):
+	session = SessionLocal()
 	conn = get_conn()
 	cursor = conn.cursor()
 	cursor.execute(QUERY_DICT["get_tema_by_id"], (id,))
@@ -68,6 +112,7 @@ def get_tema_by_id(id):
 	return tema
 
 def get_photo_by_id(id):
+	session = SessionLocal()
 	conn = get_conn()
 	cursor = conn.cursor()
 	cursor.execute(QUERY_DICT["get_photo_by_id"], (id,))
@@ -75,6 +120,7 @@ def get_photo_by_id(id):
 	return tema
 
 def get_comuna_by_id(id):
+	session = SessionLocal()
 	conn = get_conn()
 	cursor = conn.cursor()
 	cursor.execute(QUERY_DICT["get_comuna_by_id"], (id,))
@@ -82,6 +128,7 @@ def get_comuna_by_id(id):
 	return comuna
 
 def create_confession(conf_text, conf_img, user_id):
+	session = SessionLocal()
 	conn = get_conn()
 	cursor = conn.cursor()
 	cursor.execute(QUERY_DICT["create_confession"], (conf_text, conf_img, user_id))

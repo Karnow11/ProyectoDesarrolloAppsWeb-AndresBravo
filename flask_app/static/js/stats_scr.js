@@ -81,3 +81,80 @@ function crearGraficos(){
 
 }
 document.addEventListener('DOMContentLoaded', crearGraficos)
+
+
+//Creamos el grafico 1
+Highcharts.chart("container1", {
+  chart: {
+    type: "line",
+  },
+  title: {
+    text: "Activiades por dia",
+  },
+  xAxis: {
+    type: "datetime",
+    dateTimeLabelFormats: {
+      month: "%b %e, %Y",
+    },
+    title: {
+      text: "Fecha",
+    },
+  },
+  yAxis: {
+    title: {
+      text: "Numero de Actividades",
+    },
+  },
+  legend: {
+    align: "left",
+    verticalAlign: "top",
+    borderWidth: 0,
+  },
+
+  tooltip: {
+    shared: true,
+    crosshairs: true,
+  },
+
+  series: [
+    {
+      name: "Actividades",
+      data: [],
+      lineWidth: 1,
+      marker: {
+        enabled: true,
+        radius: 4,
+      },
+      color: "#FC2865",
+    },
+  ],
+});
+
+fetch("http://127.0.0.1:5000/get-stats-data-1")
+  .then((response) => response.json())
+  .then((data) => {
+    let parsedData = data.map((item) => {
+      const [year, month, day] = item.date
+        .split("-")
+        .map((part) => parseInt(part, 10));
+      return [
+        Date.UTC(year, month - 1, day), // javascript month indices start from 0 !
+        item.count,
+      ];
+    });
+
+    // Get the chart by ID
+    const chart = Highcharts.charts.find(
+      (chart) => chart && chart.renderTo.id === "container1"
+    );
+
+    // Update the chart with new data
+    chart.update({
+      series: [
+        {
+          data: parsedData,
+        },
+      ],
+    });
+  })
+  .catch((error) => console.error("Error:", error));
