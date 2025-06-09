@@ -1,3 +1,19 @@
+document.addEventListener("DOMContentLoaded", function(){
+    const boton_index = document.getElementById("index-button");
+    boton_index.addEventListener("click", function(){
+        const url3 = "{{url_for('index')}}"
+        window.location.href = ROUTES.index;
+    })
+})
+
+document.addEventListener("DOMContentLoaded", function(){
+    const boton_index = document.getElementById("listActivities-button");
+    boton_index.addEventListener("click", function(){
+        const url3 = "{{url_for('list_route')}}"
+        window.location.href = ROUTES.list_route;
+    })
+})
+
 function cargarTabla(){
     var datos = JSON.parse(localStorage.getItem("datos_fila"))
     console.log(datos.region)
@@ -57,14 +73,5 @@ function cargarTabla(){
         }
     }
 }
-document.addEventListener("DOMContentLoaded", function(){
-    const boton_list = document.getElementById("listActivities-button");
-    boton_list.addEventListener("click", function(){
-        window.location.href = "list.html"
-    })
-    const boton_index = document.getElementById("index-button");
-    boton_index.addEventListener("click", function(){
-        window.location.href = "index.html"
-    })
-})
+
 document.addEventListener('DOMContentLoaded', cargarTabla)

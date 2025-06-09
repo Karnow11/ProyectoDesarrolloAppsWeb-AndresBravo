@@ -80,7 +80,7 @@ function crearGraficos(){
     })
 
 }
-document.addEventListener('DOMContentLoaded', crearGraficos)
+//document.addEventListener('DOMContentLoaded', crearGraficos)
 
 
 //Creamos el grafico 1
@@ -205,6 +205,89 @@ fetch("http://127.0.0.1:5000/get-stats-data-2")
         {
           data: pieData,
         },
+      ],
+    });
+  })
+  .catch((error) => console.error("Error:", error));
+
+  //CREAMOS EL GRAFICO 3
+  Highcharts.chart("container3", {
+  chart: {
+    type: "column",
+  },
+
+  title: {
+    text: "Distribución de actividades por horario en el mes",
+  },
+
+  xAxis: {
+    categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sept', 'Oct', 'Nov', 'Dic'],
+    title: {text: null}
+  },
+  yAxis: {
+    min: 0,
+    title: {
+      text: 'Cantidad',
+      align: 'high'
+    }
+  },
+  plotOptions: {
+    column: {
+      pointPadding: 0.1,
+      groupPadding: 0.1,
+      borderWidth: 0
+    }
+  },
+
+  series: [
+    {
+      name: "Mañana",
+      data: [],
+    },
+    {
+      name: "Mediodia",
+      data: [],
+    },
+    {
+      name: "Tarde",
+      data: [],
+    }
+  ],
+});
+
+const meses = [1,2,3,4,5,6,7,8,9,10,11,12];
+const dataMañana = [];
+const dataMediodia = [];
+const dataTarde = []; 
+
+fetch("http://127.0.0.1:5000/get-stats-data-3")
+  .then((response) => response.json())
+  .then((data) => {
+    meses.forEach(mes => {
+      const item = data.find(d => d.mes === mes) || {};
+      dataMañana.push(item.manana || 0);
+      dataMediodia.push(item.mediodia || 0);
+      dataTarde.push(item.tarde || 0);
+
+    })
+    console.log("Valores en Mañana:")
+    console.log(dataMañana)
+    console.log("Valores Mediodia:")
+    console.log(dataMediodia)
+    console.log("Valores en la Tarde:")
+    console.log(dataTarde)
+
+    // Get the chart by ID
+    const chart = Highcharts.charts.find(
+      (chart) => chart && chart.renderTo.id === "container3"
+    );
+
+    // Update the chart with new data
+    chart.update({
+      series: [
+        { name: "Mañana", data: dataMañana},
+        { name: "Mediodia", data: dataMediodia},
+        { name: "Tarde", data: dataTarde},
       ],
     });
   })

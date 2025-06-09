@@ -97,7 +97,7 @@ def index():
     return render_template("html/index.html", data=data)
     
 @app.route("/list", methods = ["GET"])
-def list():
+def list_route():
     if request.method == "GET":
         # get last confessions 
         data = []
@@ -118,6 +118,11 @@ def list():
                 "total_fotos": 1
             })
         return render_template("html/list.html", data = data)
+    
+@app.route("/full_info", methods = ["GET"])
+def full_info():
+    if request.method == "GET":
+        return render_template("html/template_full_info.html")
 
 @app.route("/stats", methods = ["GET"])
 def stats():
@@ -158,6 +163,41 @@ def get_stats_data_2():
     data_2 = [{"tema": tema, "count": count} for tema, count in sorted(data.items())]
 
     return jsonify(data_2)
+
+#RUTA CREACION GRAFICO Barras
+@app.route("/get-stats-data-3", methods = ["GET"])
+@cross_origin(origin= "127.0.0.1", supports_credentials = True)
+def get_stats_data_3():
+    #Grafico 3
+    data = {}
+    acts = db.get_act(page_size= 30000)
+    acts = list(acts)
+    inicios = [act[6] for act in acts]
+    #print(inicios)
+    fechas_ordenadas = sorted(inicios)
+    for fecha in fechas_ordenadas:
+        horario = fecha.hour
+        mes = fecha.month
+        if mes not in data:
+            data[mes] = {"mañana": 0, "mediodia": 0, "tarde": 0}
+        if horario > 7 and horario < 12:
+            data[mes]["mañana"] += 1
+        elif horario >= 12 and horario < 18: 
+            data[mes]["mediodia"] += 1
+        else: 
+            data[mes]["tarde"] += 1
+    #print(data)
+    #Convertimos el diccionario
+    data_2 = [{
+        "mes": mes, 
+        "manana": valores["mañana"], 
+        "mediodia": valores["mediodia"], 
+        "tarde": valores["tarde"]
+        }
+        for mes, valores in data.items()]
+    #print(data_2)
+    return jsonify(data_2)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

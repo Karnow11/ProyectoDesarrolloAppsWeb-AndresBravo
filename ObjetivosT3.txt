@@ -1,7 +1,6 @@
 Tarea3
 Objetivos:
--Desplegar los 3 graficos de la Tarea 1 pero ahora ya hechos bien
--En la pantalla de stats agregar enlace a la portada
+-Agregar link a enlace de full info para una actividad X
 -Agregar funcionalidad de comentarios a las actividades
     -Al visualizar la info de la actividad se debe poder agregar un comentarios
     -Nombre(texto) - texto del comentario(text area) - Boton agregar comentario - > Valida nombre y comentario del lado del servido, 
