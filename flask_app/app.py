@@ -109,6 +109,7 @@ def list_route():
 
             ### CHECKPOINT 
             data.append({
+                "id": id,
                 "inicio": inicio,
                 "termino": termino,
                 "comuna": comuna,
@@ -119,10 +120,37 @@ def list_route():
             })
         return render_template("html/list.html", data = data)
     
-@app.route("/full_info", methods = ["GET"])
-def full_info():
+@app.route("/full_info/<int:id>", methods = ["GET"])
+def full_info(id):
+    act = db.get_act_by_id(id)
+    id, comuna, sector, nombre, mail, celular, inicio, fin, descripcion = act[0]
+    tema = db.get_tema_by_id(id)[0][0]
+    comuna = db.get_comuna_by_id(comuna)[0][0]
+    region_id = db.get_region_id_by_comuna(comuna)
+    region = db.get_region_by_id(region_id)[0][0]
+    contacto = db.get_contacto_by_act_id(id)[0][0]
+    detalle_contacto  = db.get_detalle_contacto_by_act_id(id)[0][0]
+    data = []
+    data.append({
+                "id": id,
+                "region": region,
+                "comuna": comuna,
+                "sector": sector,
+                "organizador": nombre,
+                "email": mail,
+                "celular": celular,
+                "contacto": contacto,
+                "detalle_contacto": detalle_contacto,
+                "inicio": inicio,
+                "termino": fin,
+                "descripcion": descripcion,
+                "tema": tema,                
+                "total_fotos": 1
+            })
+    print(data)
+    print(data[0]["region"])
     if request.method == "GET":
-        return render_template("html/template_full_info.html")
+        return render_template("html/template_full_info.html", data = data[0])
 
 @app.route("/stats", methods = ["GET"])
 def stats():

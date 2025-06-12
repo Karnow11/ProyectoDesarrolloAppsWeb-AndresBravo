@@ -1,16 +1,21 @@
-{
+{   
     "get_user_by_id": "SELECT id, username, email, password FROM usuarios WHERE id=%s;",
     "get_user_by_email": "SELECT id, username, email, password FROM usuarios WHERE email=%s;",
     "get_user_by_username": "SELECT id, username, email, password FROM usuarios WHERE username=%s;",
     "create_act": "INSERT INTO usuarios (username, password, email) VALUES (%s, %s, %s);",
 
     "get_act": "SELECT * FROM actividad ORDER BY id DESC LIMIT %s;",
-    "get_tema_by_id": "SELECT tema FROM actividad_tema WHERE actividad_id = %s",
-    "get_photo_by_id": "SELECT ruta_archivo FROM foto WHERE id = %s",
-    "get_comuna_by_id":"SELECT nombre FROM comuna WHERE id = %s",
-    "get_comuna_id":"SELECT id FROM comuna WHERE nombre = %s AND region_id = %s",
+    "get_act_by_id": "SELECT * FROM actividad WHERE id = %s;",
+    "get_tema_by_id": "SELECT tema FROM actividad_tema WHERE actividad_id = %s;",
+    "get_photo_by_id": "SELECT ruta_archivo FROM foto WHERE id = %s;",
+    "get_comuna_by_id":"SELECT nombre FROM comuna WHERE id = %s;",
+    "get_comuna_id":"SELECT id FROM comuna WHERE nombre = %s AND region_id = %s;",
+    "get_region_id_by_comuna": "SELECT region_id FROM comuna WHERE nombre = %s;",
+    "get_region_by_id": "SELECT nombre FROM region WHERE id = %s;",
     "get_id_by_every": "SELECT id FROM actividad WHERE comuna_id = %s AND sector = %s AND nombre = %s AND email = %s AND celular = %s AND dia_hora_inicio = %s AND dia_hora_termino = %s AND descripcion = %s LIMIT 1;",
     "get_temas": "SELECT * FROM actividad_tema",
+    "get_contacto_by_act_id": "SELECT nombre FROM contactar_por WHERE actividad_id = %s",
+    "get_detalle_contacto_by_act_id": "SELECT identificador FROM contactar_por WHERE actividad_id = %s",
 
     "register_act": "INSERT INTO actividad (comuna_id, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);",
     "register_tema": "INSERT INTO actividad_tema (tema, glosa_otro, actividad_id) VALUES (%s, %s, %s);",

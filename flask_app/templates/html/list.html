@@ -12,6 +12,7 @@
             <table border="1" class="table">
                 <thead>
                     <tr>
+                        <th>Link actividad</th>
                         <th>Inicio</th>
                         <th>Termino</th>
                         <th>Comuna</th>
@@ -73,6 +74,7 @@
                         <script>console.log("Pasó el if data")</script>
                         {% for act in data%}
                             <tr>
+                                <td><a class = "btn-ver" href = "{{url_for('full_info', id = act.id)}}">Ver</a></td>
                                 <td>{{act.inicio}}</td>
                                 <td>{{act.termino}}</td>
                                 <td>{{act.comuna}}</td>

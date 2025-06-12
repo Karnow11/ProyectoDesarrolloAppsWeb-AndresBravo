@@ -103,6 +103,14 @@ def get_act(page_size):
 	act = cursor.fetchall()
 	return act
 
+def get_act_by_id(id):
+	session = SessionLocal()
+	conn = get_conn()
+	cursor = conn.cursor()
+	cursor.execute(QUERY_DICT["get_act_by_id"], (id,))
+	act = cursor.fetchall()
+	return act
+
 def get_tema_by_id(id):
 	session = SessionLocal()
 	conn = get_conn()
@@ -127,6 +135,38 @@ def get_comuna_by_id(id):
 	comuna = cursor.fetchall()
 	return comuna
 
+def get_region_id_by_comuna(id):
+	session = SessionLocal()
+	conn = get_conn()
+	cursor = conn.cursor()
+	cursor.execute(QUERY_DICT["get_region_id_by_comuna"], (id,))
+	region = cursor.fetchall()
+	return region
+
+def get_region_by_id(id):
+	session = SessionLocal()
+	conn = get_conn()
+	cursor = conn.cursor()
+	cursor.execute(QUERY_DICT["get_region_by_id"], (id,))
+	region = cursor.fetchall()
+	return region
+
+def get_contacto_by_act_id(id):
+	session = SessionLocal()
+	conn = get_conn()
+	cursor = conn.cursor()
+	cursor.execute(QUERY_DICT["get_contacto_by_act_id"], (id,))
+	contacto = cursor.fetchall()
+	return contacto
+
+def get_detalle_contacto_by_act_id(id):
+	session = SessionLocal()
+	conn = get_conn()
+	cursor = conn.cursor()
+	cursor.execute(QUERY_DICT["get_detalle_contacto_by_act_id"], (id,))
+	contacto = cursor.fetchall()
+	return contacto
+
 def create_confession(conf_text, conf_img, user_id):
 	session = SessionLocal()
 	conn = get_conn()
@@ -141,7 +181,7 @@ def get_temas():
 	cursor.execute(QUERY_DICT["get_temas"])
 	temas = cursor.fetchall()
 	return temas
-	
+
 
 # -- db-related functions --
 #Nuevo

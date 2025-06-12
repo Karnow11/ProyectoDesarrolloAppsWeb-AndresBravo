@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% if data%}
+                    {% if data %}
                         <tr>
                             <td>{{data.region}}</td>
                             <td>{{data.comuna}}</td>
@@ -47,12 +47,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% if data%}
+                    {% if data %}
                         <tr>
-                            <td>{{data.nombre}}</td>
-                            <td>{{data.email}}</td>
-                            <td>{{data.celular}}</td>
-                            <td>{{data.contacto}}{{data.detalle_contacto}}</td>
+                            <td>{{data["organizador"]}}</td>
+                            <td>{{data["email"]}}</td>
+                            <td>{{data["celular"]}}</td>
+                            <td>{{data["contacto"]}} - {{data["detalle_contacto"]}}</td>
                         </tr>
                     {% endif %}
                 </tbody>
@@ -73,12 +73,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% if data%}
+                    {% if data %}
                         <tr>
-                            <td>{{data.inicio}}</td>
-                            <td>{{data.fin}}</td>
-                            <td>{{data.descripcion}}</td>
-                            <td>{{data.tema}}</td>
+                            <td>{{data["inicio"]}}</td>
+                            <td>{{data["termino"]}}</td>
+                            <td>{{data["descripcion"]}}</td>
+                            <td>{{data["tema"]}}</td>
                         </tr>
                     {% endif %}
                 </tbody>
