@@ -1,9 +1,9 @@
 Tarea3
 Objetivos:
 -Agregar link a enlace de full info para una actividad X
--Agregar funcionalidad de comentarios a las actividades
-    -Al visualizar la info de la actividad se debe poder agregar un comentarios
-    -Nombre(texto) - texto del comentario(text area) - Boton agregar comentario - > Valida nombre y comentario del lado del servido, 
+-Agregar funcionalidad de comentarios a las actividades X
+    -Al visualizar la info de la actividad se debe poder agregar un comentarios X
+    -Nombre(texto) - texto del comentario(text area) - Boton agregar comentario - > Valida nombre y comentario del lado del servido,  X
      y agrega el comentario a la base de datos - Si no se cumplen las validaciones se debe informar al usuario
-    - Agregar listado de comentarios para una actividad en la vista de la info de la actividad, con fecha, nombre comentarista y comentario
-    - Debe utilizar llamadas asyncronas
+    - Agregar listado de comentarios para una actividad en la vista de la info de la actividad, con fecha, nombre comentarista y comentario X
+    - Debe utilizar llamadas asyncronas X
