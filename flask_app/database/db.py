@@ -2,7 +2,7 @@ import pymysql
 import json
 from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
-
+from bleach import clean 
 
 DB_NAME = "tarea2"
 DB_USERNAME = "cc5002" #cc5002
@@ -182,6 +182,13 @@ def get_temas():
 	temas = cursor.fetchall()
 	return temas
 
+def get_comentarios_by_id(id):
+	session = SessionLocal()
+	conn = get_conn()
+	cursor = conn.cursor()
+	cursor.execute(QUERY_DICT["get_comentarios_by_id"], (id))
+	comentarios = cursor.fetchall()
+	return comentarios
 
 # -- db-related functions --
 #Nuevo
@@ -209,6 +216,22 @@ def register_act(region, comuna, sector, name, email, celular, contact_detalle, 
 			cursor.execute(QUERY_DICT["register_contact"], ('otra', contact_detalle[contact], id))
 	conn.commit()
 
+def register_comentario(name, comentario, fecha, id):
+	san_name = clean(name)
+	san_com = clean(comentario)
+	conn = get_conn()
+	cursor = conn.cursor()
+	cursor.execute(QUERY_DICT["register_comentario"], (name, comentario, fecha, id))
+	conn.commit()
+	return {
+		"name": san_name,
+		"time_text": fecha,
+		"text": san_com,
+	}
+
+
+
+#-----------------------------------------------------------------------------------------------------------
 def register_user(username, password, email):
 	# 1. check the email is not in use
 	_email_user = get_user_by_email(email)

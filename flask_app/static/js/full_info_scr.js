@@ -74,4 +74,95 @@ function cargarTabla(){
     }
 }
 
-document.addEventListener('DOMContentLoaded', cargarTabla)
+//document.addEventListener('DOMContentLoaded', cargarTabla)
+
+// Trabajo comentarios:
+const validadorCom = (nombre, texto) => {
+    //Validar longitud
+    if (nombre.length > 80 || nombre.length < 1){
+        return [false, "Nombre muy largo o muy corto"]
+    }
+    if (texto.length > 300 || texto.length < 2){
+        return [false, "Texto muy largo o muy corto"]
+    }
+    //Tipo y nulidad
+    if (nombre == null || texto == null || nombre.trim() === '' || texto.trim() === ''){
+        return [false, "Campo vacio"]
+    }
+
+    return [true, "Todo bien"]
+}
+
+document.addEventListener('DOMContentLoaded', () =>{
+    const submit_add_Com_Btn2 = document.getElementById("post-com-button");
+    const statusMessageDiv = document.getElementById('status-message');
+    const comDiv = document.getElementById('com-list-div3');
+
+    submit_add_Com_Btn2.addEventListener('click', async () => {
+        let nombre = document.getElementById("com_name_field").value;
+        let texto = document.getElementById("com_text_field").value;
+        let act_id = document.getElementById("com_act_id").value;
+        let form = document.getElementById("com-form")
+        let isValid = validadorCom(nombre,texto);
+        let valid_msg = isValid[1];
+        isValid = isValid[0]
+        if (!isValid) {
+            alert(`Errores en el formulario: ${valid_msg}`)
+            return;
+        }
+        const postData = {
+            "name": nombre,
+            "comentario": texto,
+            "act_id": act_id,
+        }
+        try {
+            const response = await fetch(`${window.origin}/addComentario2`, {
+                method: "POST",
+                body: JSON.stringify(postData),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            if (response.ok) { // codigo 200-299
+                const result = await response.json();
+                showStatusMessage('Comentario publicado!', 'success');
+                form.reset();
+            
+
+            if (result && result.data){
+                addComToDom(result.data)
+            }
+                
+            }
+            else {
+                const ErrorData = await response.json()
+                showStatusMessage(`Error: ${ErrorData.message || "Error al publicar el comentario."}`, 'error')
+            }
+        } catch (error) {
+            console.error("Error enviando comentario:", error);
+            showStatusMessage("Error enviando comentario. Intentelo de nuevo", error)
+        } 
+    })
+
+    function showStatusMessage(message, type) {
+        statusMessageDiv.textContent = message;
+        statusMessageDiv.className = `mensaje ${type}`;
+        statusMessageDiv.style.display = 'block';
+    }
+
+    function addComToDom(comentario){
+        comentario.time_text = comentario.time_text.toLocaleString();
+        nuevoCom = `
+            <div style=" background-color: #A9A9A9; width: 94%; margin-left: 3%; margin-right: 3%;">
+                <div style = "display: flex; align-items: center;">  
+                    <h4 style = "margin-left: 1%; text-decoration: underline;">${comentario.name}</h4>
+                    <h5 style = "margin-left: auto;">Ahora</h5>
+                </div>
+                <h5 style = "padding: 5px;">${comentario.text}</h5>
+            </div>
+            <br>
+        `;
+        comDiv.insertAdjacentHTML('afterbegin', nuevoCom);
+
+    }
+});

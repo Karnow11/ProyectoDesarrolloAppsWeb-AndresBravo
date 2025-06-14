@@ -16,8 +16,10 @@
     "get_temas": "SELECT * FROM actividad_tema",
     "get_contacto_by_act_id": "SELECT nombre FROM contactar_por WHERE actividad_id = %s",
     "get_detalle_contacto_by_act_id": "SELECT identificador FROM contactar_por WHERE actividad_id = %s",
+    "get_comentarios_by_id": "SELECT * FROM comentario WHERE actividad_id = %s",
 
     "register_act": "INSERT INTO actividad (comuna_id, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);",
     "register_tema": "INSERT INTO actividad_tema (tema, glosa_otro, actividad_id) VALUES (%s, %s, %s);",
-    "register_contact": "INSERT INTO contactar_por (nombre, identificador, actividad_id) VALUES (%s, %s, %s);"
+    "register_contact": "INSERT INTO contactar_por (nombre, identificador, actividad_id) VALUES (%s, %s, %s);",
+    "register_comentario": "INSERT INTO comentario (nombre, texto, fecha, actividad_id) VALUES (%s, %s, %s, %s);"
 }

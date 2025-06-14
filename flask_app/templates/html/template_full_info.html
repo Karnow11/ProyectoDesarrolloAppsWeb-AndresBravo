@@ -123,6 +123,51 @@
                     {% endif %}
                 </tbody>
             </table>
+
+        </div>
+        <div class = "comentarios_container" id = "comentarios_container">
+            <div class = "comentario_title" id = "comentario_tittle">
+                <h2> Sección Comentarios </h2>
+            </div>
+            <form class = "com_form" id = "com-form" method = "post" enctype = "multipart/form-data">
+                <input type = "hidden" id = "com_act_id" name = "com_act_id" value = {{data.id}}>
+                <div id="com-input" class="com-input">
+                    <div id = "status-message"></div>
+                    <div style ="margin-left:2%;">
+                        <h4 style = "margin-bottom: 5px;">Nombre</h4>
+                        <input id="com_name_field" name="com_name_field" type="text" maxlength="80" required placeholder = "-Nombre-">
+                    </div>
+                    
+                    <br>
+
+                    <textarea id="com_text_field" name="com_text_field" wrap="soft" maxlength="300" cols ="50" rows="10" placeholder = "-Ingrese un comentario-" required style ="width: 96%; height: 60px; margin-left: 2%; margin-right: 2%;"></textarea>
+                    <br>
+                </div>
+                <div id= "com-button" class = "com-button">
+                    <button type= "button" id = "post-com-button" class = "post-com-button" style = "float: right; margin-right: 2%;">Publicar</button>
+                </div>
+            </form>
+            <div id = "com-list-div" style = "background-color: gray;">
+                <h3 style = "text-decoration: underline;" > Comentarios actuales: </h3>
+                <div id = "com-list-div3"></div>
+                <div id = "com-list-div2">
+                    {% if data2 %}
+                        {% for com in data2 | reverse %}
+                            <div style=" background-color: #A9A9A9; width: 94%; margin-left: 3%; margin-right: 3%;">
+                                <div style = "display: flex; align-items: center;">  
+                                    <h4 style = "margin-left: 1%; text-decoration: underline;" >{{com.name}}</h4>
+                                    <h5 style = "margin-left: auto;">{{com.time_text}}</h5>
+                                </div>
+                                <h5 style = "padding: 5px;">{{com.text}}</h5>
+                            </div>
+                            <br>
+                        {% endfor %}
+                    {% else %}
+                            <h3>No hay comentarios</h3>
+                    {% endif %}
+                </div>
+            </div>
+            
         </div>
         <div class="container" id= "action_buttons">
             <button id="listActivities-button">Listado Actividades</button>
@@ -133,6 +178,5 @@
             list_route: "{{url_for('list_route')}}"
         }</script>
         <script src="{{url_for('static', filename ='js/full_info_scr.js')}}"></script>
-        <script src="../js/full_info_scr.js"></script>
     </body>
 </html>

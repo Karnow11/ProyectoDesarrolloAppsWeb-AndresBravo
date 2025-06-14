@@ -1,11 +1,12 @@
 from flask import Flask, request, render_template, redirect, url_for, session, jsonify
 from flask_cors import cross_origin
-from utils.validations import validate_login_user, validate_register_user, validate_confession, validate_add_act
+from utils.validations import validate_login_user, validate_register_user, validate_confession, validate_add_act, validate_comentario
 from database import db
 from werkzeug.utils import secure_filename
 import hashlib
 import filetype
 import os
+from datetime import date,datetime
 
 UPLOAD_FOLDER = 'static/uploads'
 
@@ -70,6 +71,44 @@ def addAct():
     
     elif request.method == "GET":
         return render_template("html/addAct.html")
+    
+@app.route("/addComentario", methods = ["POST"])
+def addComentario():
+    if request.method == "POST":
+        name = request.form.get("com_name_field")
+        comentario = request.form.get("com_text_field")
+        id = int(request.form.get("com_act_id"))
+        fecha = datetime.now()
+        if validate_comentario(name,comentario):
+            db.register_comentario(name, comentario, fecha, id)
+            print("Pasa el register?")
+            return redirect(url_for('full_info', id = id))
+
+
+@app.route("/addComentario2", methods = ["POST"])
+@cross_origin(origin=["127.0.0.1:5000","localhost:5000"], supports_credentials=True)
+def addComentario2():
+    if request.method == "POST":
+        try:
+            data = request.get_json()
+            name = data.get('name')
+            comentario = data.get('comentario')
+            act_id = int(data.get('act_id'))
+            fecha = datetime.now()
+            is_valid_com = validate_comentario(name,comentario)
+            mensaje_valid = is_valid_com[1]
+            is_valid_com = is_valid_com[0]
+            if not is_valid_com:
+                return jsonify({"message": f"Formulario con errores - {mensaje_valid}"}), 400
+            
+            nueva_data = db.register_comentario(name, comentario, fecha, act_id)
+            return jsonify({
+                "message": "Comentario publicado!",
+                "data": nueva_data
+            }), 200
+        except Exception as e:
+            print(f"Error en addComentario: {e}")
+            return jsonify({"message": "Error interno del servidor al agregar comentario"})
 #-----------------------------------------------------------------------------------
 # --- Routes ---
 @app.route("/", methods=["GET"])
@@ -147,10 +186,18 @@ def full_info(id):
                 "tema": tema,                
                 "total_fotos": 1
             })
-    print(data)
-    print(data[0]["region"])
+    comentarios = db.get_comentarios_by_id(id)
+    data2 = []
+    for com in comentarios:
+        id, name, text, time_text, act_id = com
+        data2.append({
+            "name": name,
+            "text": text,
+            "time_text": time_text
+        })
+
     if request.method == "GET":
-        return render_template("html/template_full_info.html", data = data[0])
+        return render_template("html/template_full_info.html", data = data[0], data2 = data2)
 
 @app.route("/stats", methods = ["GET"])
 def stats():

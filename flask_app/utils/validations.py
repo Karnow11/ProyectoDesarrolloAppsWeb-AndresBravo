@@ -54,3 +54,19 @@ def validate_confession(conf_text, conf_img):
 #-------------------------------------------------------------------------
 def validate_add_act(region, comuna, name, email, inicio, fin, tema, fotos):
     return True
+def validate_comentario(nombre,texto):
+    #Validar longitud
+    if len(nombre) > 80 or len(nombre) < 1:
+        return [False, "Nombre muy largo o muy corto"]
+    if len(texto) > 300 or len(texto) < 2:
+        return [False, "Texto muy largo o muy corto"]
+    #Tipo y nulidad
+    if nombre is None or texto is None or nombre.strip() == '' or texto.strip() =='':
+        return [False, "Campo vacio"]
+    
+    #Validamos el nombre
+    patron = r"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s'-]+$"
+    if not re.fullmatch(patron, nombre):
+        return [False, "Nombre con caracteres no permitidos"]
+    else:
+        return [True, "Todo en orden"]
