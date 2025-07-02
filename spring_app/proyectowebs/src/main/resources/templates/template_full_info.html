@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang ="es">
+    <head>
+        <title> Beauchef Activities</title>
+        <link rel="stylesheet" type ="text/css" href="{{url_for('static', filename = 'css/style.css')}}"></link>
+    </head>
+    <body>
+        <div class="container" id= "welcome_msg">
+            <h2>Actividad Desplegada</h2>
+        </div>
+        <div class="table-container" id="table_container_donde">
+            <div class ="container">
+                <h2>¿Donde?</h2>
+            </div>
+            <table border="1" id = "tabla_agregadora_donde" class="table">
+                <thead>
+                    <tr>
+                        <th>Región</th>
+                        <th>Comuna</th>
+                        <th>Sector</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if data %}
+                        <tr>
+                            <td>{{data.region}}</td>
+                            <td>{{data.comuna}}</td>
+                            <td>{{data.sector}}</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container" id="table_container_quien">
+            <div class="container">
+                <h2>¿Quien organiza?</h2>
+            </div>
+            <table border="1" id = "tabla_agregadora_quien"class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Numero de Celular</th>
+                        <th>Contactor por</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if data %}
+                        <tr>
+                            <td>{{data["organizador"]}}</td>
+                            <td>{{data["email"]}}</td>
+                            <td>{{data["celular"]}}</td>
+                            <td>{{data["contacto"]}} - {{data["detalle_contacto"]}}</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container" id="table_container_cuando">
+            <div class="container">
+                <h2>¿Cuando y de que?</h2>
+            </div>
+            <table border="1" id = "tabla_agregadora_cuando"class="table">
+                <thead>
+                    <tr>
+                        <th>Dia-Hora Inicio</th>
+                        <th>Dia-Hora- Termino</th>
+                        <th>Descripción</th>
+                        <th>Tema</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if data %}
+                        <tr>
+                            <td>{{data["inicio"]}}</td>
+                            <td>{{data["termino"]}}</td>
+                            <td>{{data["descripcion"]}}</td>
+                            <td>{{data["tema"]}}</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container" id="table_container_fotos">
+            <div class="container">
+                <h2>Fotos</h2>
+            </div>
+            <table border="1" id = "tabla_agregadora_fotos"class="table">
+                <thead>
+                    <tr>
+                        <th>Foto 1</th>
+                        <th>Foto 2</th>
+                        <th>Foto 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if data%}
+                        <tr>
+                            <td><img src="{{data.foto1}}" width="320" height="240"></td>
+                            <td><img src="{{data.foto2}}" width="320" height="240"></td>
+                            <td><img src="{{data.foto3}}" width="320" height="240"></td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            <table border="1" id = "tabla_agregadora_fotos2"class="table">
+                <thead>
+                    <tr>
+                        <th>Foto 4</th>
+                        <th>Foto 5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if data%}
+                        <tr>
+                            <td><img src="{{data.foto4}}" width="320" height="240"></td>
+                            <td><img src="{{data.foto5}}" width="320" height="240"></td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+        </div>
+        <div class = "comentarios_container" id = "comentarios_container">
+            <div class = "comentario_title" id = "comentario_tittle">
+                <h2> Sección Comentarios </h2>
+            </div>
+            <form class = "com_form" id = "com-form" method = "post" enctype = "multipart/form-data">
+                <input type = "hidden" id = "com_act_id" name = "com_act_id" value = {{data.id}}>
+                <div id="com-input" class="com-input">
+                    <div id = "status-message"></div>
+                    <div style ="margin-left:2%;">
+                        <h4 style = "margin-bottom: 5px;">Nombre</h4>
+                        <input id="com_name_field" name="com_name_field" type="text" maxlength="80" required placeholder = "-Nombre-">
+                    </div>
+                    
+                    <br>
+
+                    <textarea id="com_text_field" name="com_text_field" wrap="soft" maxlength="300" cols ="50" rows="10" placeholder = "-Ingrese un comentario-" required style ="width: 96%; height: 60px; margin-left: 2%; margin-right: 2%;"></textarea>
+                    <br>
+                </div>
+                <div id= "com-button" class = "com-button">
+                    <button type= "button" id = "post-com-button" class = "post-com-button" style = "float: right; margin-right: 2%;">Publicar</button>
+                </div>
+            </form>
+            <div id = "com-list-div" style = "background-color: gray;">
+                <h3 style = "text-decoration: underline;" > Comentarios actuales: </h3>
+                <div id = "com-list-div3"></div>
+                <div id = "com-list-div2">
+                    {% if data2 %}
+                        {% for com in data2 | reverse %}
+                            <div style=" background-color: #A9A9A9; width: 94%; margin-left: 3%; margin-right: 3%;">
+                                <div style = "display: flex; align-items: center;">  
+                                    <h4 style = "margin-left: 1%; text-decoration: underline;" >{{com.name}}</h4>
+                                    <h5 style = "margin-left: auto;">{{com.time_text}}</h5>
+                                </div>
+                                <h5 style = "padding: 5px;">{{com.text}}</h5>
+                            </div>
+                            <br>
+                        {% endfor %}
+                    {% else %}
+                            <h3>No hay comentarios</h3>
+                    {% endif %}
+                </div>
+            </div>
+            
+        </div>
+        <div class="container" id= "action_buttons">
+            <button id="listActivities-button">Listado Actividades</button>
+            <button id="index-button">Inicio</button>
+        </div>
+        <script> const ROUTES = {
+            index: "{{url_for('index')}}",
+            list_route: "{{url_for('list_route')}}"
+        }</script>
+        <script src="{{url_for('static', filename ='js/full_info_scr.js')}}"></script>
+    </body>
+</html>

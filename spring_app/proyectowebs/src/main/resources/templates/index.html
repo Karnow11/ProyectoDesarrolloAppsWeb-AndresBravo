@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang ="es">
+    <head>
+        <title> Beauchef Activities</title>
+        <link rel="stylesheet" type ="text/css" th:href="@{/css/style.css}"></link>
+    </head>
+    <body>
+        <div class="container" id= "logo">
+            <h2>Bienvenidos a Beauchef Activities</h2>
+        </div>
+        <div class="container" id= "welcome_msg">  
+            <h4>Apreta alguno de los siguientes botones para realizar una acción</h4>
+        </div>
+        <div class="container" id= "action_buttons">
+            <button id="addActivities-button">Agregar Actividad</button>
+            <button id="listActivities-button">Listado</button>
+            <button id="stats-button">Estadisticas</button>
+        </div>
+        <div class="table-container" id="table-container">
+            <div><h3>Aqui puedes ver las actividades recientes</h3></div>
+            <table border="1" class ="table">
+                <thead>
+                    <tr>
+                        <th>Inicio</th>
+                        <th>Termino</th>
+                        <th>Comuna</th>
+                        <th>Sector</th>
+                        <th>Tema</th>
+                        <th>Foto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="act : ${data}">
+                        <td th:text = "${act['inicio']}"></td>
+                        <td th:text = "${act['termino']}"></td>
+                        <td th:text = "${act['comuna']}"></td>
+                        <td th:text = "${act['sector']}"></td>
+                        <td th:text = "${act['tema']}"></td>
+                        <td><img th:src="@{${act['path_image']}}" width="320" height="240"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script th:inline="javascript"> 
+            const ROUTES = {
+                addAct: /*[[@{/add-act}]]*/,
+                list: /*[[@{/list}]]*/,
+                stats: /*[[@{/stats}]]*/
+            }
+        </script>
+        <script th:src="@{/js/func_aux.js}"></script>
+    </body>
+
+</html>
