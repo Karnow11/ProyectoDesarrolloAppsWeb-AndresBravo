@@ -22,7 +22,7 @@ public class AppController {
     @GetMapping("/")
     public String indexRoute(Model model) {
         List<Map<String, String>> modelData = appService.getActividadesData(5);
-        
+
         model.addAttribute("data", modelData);
         return "index";
     }
@@ -65,6 +65,13 @@ public class AppController {
         List<Map<String, String>> modelData = appService.getActividadesData(500);
         model.addAttribute("data", modelData);
         return "list";
+    }
+
+    @GetMapping("/vote")
+    public String voteRoute(Model model) {
+        List<Map<String, String>> modelData = appService.getActividadesData(Integer.MAX_VALUE);
+        model.addAttribute("data", modelData);
+        return "vote";
     }
 
 }

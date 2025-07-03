@@ -18,6 +18,12 @@ document.addEventListener("DOMContentLoaded", function(){
         window.location.href = ROUTES.stats;
     })
 
+    const boton_vote = document.getElementById("vote-button");
+    boton_vote.addEventListener("click", function(){
+        const url4 = "{{url_for('vote')}}"
+        window.location.href = ROUTES.vote;
+    })
+
     //const boton_index = document.getElementById("index-button");
     //boton_index.addEventListener("click", function(){
     //    const url4 = "{{url_for('index')}}"

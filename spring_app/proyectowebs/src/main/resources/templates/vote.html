@@ -6,38 +6,37 @@
     </head>
     <body>
         <div class="container" id= "logo">
-            <h2>Bienvenidos a Beauchef Activities</h2>
+            <h2>Beauchef Activities</h2>
         </div>
         <div class="container" id= "welcome_msg">  
-            <h4>Apreta alguno de los siguientes botones para realizar una acción</h4>
+            <h4>Vota por las actividades en las que has participado!!!</h4>
         </div>
         <div class="container" id= "action_buttons">
-            <button id="addActivities-button">Agregar Actividad</button>
-            <button id="listActivities-button">Listado</button>
-            <button id="stats-button">Estadisticas</button>
-            <button id="vote-button">Dar Nota</button>
+            <button id="index-button">Inicio</button>
         </div>
         <div class="table-container" id="table-container">
-            <div><h3>Aqui puedes ver las actividades recientes</h3></div>
+            <div><h3>Listado de Actividades</h3></div>
             <table border="1" class ="table">
                 <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Inicio</th>
-                        <th>Termino</th>
-                        <th>Comuna</th>
                         <th>Sector</th>
+                        <th>Nombre</th>
                         <th>Tema</th>
-                        <th>Foto</th>
+                        <th>Nota</th>
+                        <th>Votar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="act : ${data}">
+                        <td th:text = "${act['id']}"></td>
                         <td th:text = "${act['inicio']}"></td>
-                        <td th:text = "${act['termino']}"></td>
-                        <td th:text = "${act['comuna']}"></td>
                         <td th:text = "${act['sector']}"></td>
+                        <td th:text = "${act['nombre']}"></td>
                         <td th:text = "${act['tema']}"></td>
-                        <td><img th:src="@{${act['path_image']}}" width="320" height="240"></td>
+                        <td><img th:src="@{${act['nota']}}"></td>
+                        <td><button id = "vote-button">Votar</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -50,7 +49,7 @@
                 vote: /*[[@{/vote}]]*/
             }
         </script>
-        <script th:src="@{/js/func_aux.js}"></script>
+        <script th:src="@{/js/vote_scr.js}"></script>
     </body>
 
 </html>
