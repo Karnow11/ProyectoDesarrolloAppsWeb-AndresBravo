@@ -13,6 +13,7 @@ import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,21 @@ import org.springframework.web.multipart.MultipartFile;
 import com.proyectowebs.proyectowebs.models.Actividad;
 import com.proyectowebs.proyectowebs.models.ActividadRepository;
 
+import com.proyectowebs.proyectowebs.models.Comuna;
+import com.proyectowebs.proyectowebs.models.ComunaRepository;
+
 @Service
 public class AppService {
 
     private final String pathStatic;
     private final ActividadRepository actividadRepository;
+    private final ComunaRepository comunaRepository;
+    private final ApiService apiService;
 
-    public AppService(ActividadRepository actividadRepository) throws IOException {
+    public AppService(ApiService apiService, ActividadRepository actividadRepository, ComunaRepository comunaRepository) throws IOException {
+        this.apiService = apiService;
         this.actividadRepository = actividadRepository;
+        this.comunaRepository = comunaRepository;
         // Dynamically resolve the absolute path for the static directory
         Path staticDir = Paths.get(ResourceUtils.getFile("classpath:static").getAbsolutePath());
         this.pathStatic = staticDir.toString();
@@ -41,9 +49,12 @@ public class AppService {
         List<Map<String, String>> actividadesData = new ArrayList<>();
         
         for (Actividad act : Actividades) {
+            Optional<Comuna> comunaOpt = apiService.getComunaById(act.getComuna());
+            Optional<String> temaOpt = apiService.getTemaById(act.getId());
             Map<String, String> actividadData = new HashMap<>();
-            actividadData.put("id", act.getId().toString());
-            actividadData.put("comuna", Integer.toString(act.getComuna()));
+            actividadData.put("id", "" + act.getId());
+            actividadData.put("tema", temaOpt.orElse("Desconocido"));
+            actividadData.put("comuna", comunaOpt.map(Comuna::getNombre).orElse("Desconocida"));
             actividadData.put("sector", act.getSector().toString());
             actividadData.put("nombre", act.getNombre().toString());
             actividadData.put("mail", act.getMail().toString());
@@ -56,6 +67,21 @@ public class AppService {
             actividadesData.add(actividadData);
         }
         return actividadesData;
+    }
+
+    public List<Map<String, String>> getComunaData(Long id) {
+        List<Comuna> Comunas = comunaRepository.findAll();
+        List<Map<String, String>> ComunasData = new ArrayList<>();
+        for (Comuna com : Comunas) {
+            Map<String, String> comunaData = new HashMap<>();
+            if (com.getId() == id){
+                comunaData.put("id", com.getId().toString());
+                comunaData.put("nombre", com.getNombre());
+                comunaData.put("region", com.getRegion().toString());
+                ComunasData.add(comunaData);
+            }
+        }
+        return ComunasData;
     }
 
     public void handlePostRequest(

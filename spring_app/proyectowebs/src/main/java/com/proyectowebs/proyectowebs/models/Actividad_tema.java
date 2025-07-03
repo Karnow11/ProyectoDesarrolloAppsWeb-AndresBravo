@@ -31,16 +31,16 @@ public class Actividad_tema{
     private String glosa_otro;
 
     @NotNull
-    private Long id_actividad;
+    private Long actividad_id;
 
     public Actividad_tema(){}
 
     public Actividad_tema(String tema,
                           String glosa_otro,
-                          Long id_actividad){
+                          Long actividad_id){
         this.tema = tema;
         this.glosa_otro = glosa_otro;
-        this.id_actividad = id_actividad;
+        this.actividad_id = actividad_id;
     }
 
     public Long getId() {
@@ -55,8 +55,8 @@ public class Actividad_tema{
         return glosa_otro;
     }
 
-    public Long getId_actividad() {
-        return id_actividad;
+    public Long getActividad_id() {
+        return actividad_id;
     }
 
     public static Boolean validateTema(String temaText) {

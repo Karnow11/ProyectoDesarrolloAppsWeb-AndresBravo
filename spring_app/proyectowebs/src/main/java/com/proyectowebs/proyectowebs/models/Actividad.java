@@ -28,10 +28,10 @@ public class Actividad{
         strategy = GenerationType.SEQUENCE,
         generator = "actividad_sequence"
     )
-    private Long id;
+    private int id;
 
     @NotNull
-    private int comuna;
+    private int comuna_id;
 
     @NotNull
     @Size(max = 100)
@@ -67,7 +67,7 @@ public class Actividad{
 
     public Actividad(){}
 
-    public Actividad(int comuna,
+    public Actividad(int comuna_id,
                     String sector,
                     String nombre,
                     String mail,
@@ -76,7 +76,7 @@ public class Actividad{
                     LocalDateTime dia_hora_termino,
                     String descripcion,
                     String img_filename){
-        this.comuna = comuna;
+        this.comuna_id = comuna_id;
         this.sector = sector;
         this.nombre = nombre;
         this.mail = mail;   
@@ -87,12 +87,12 @@ public class Actividad{
         this.img_file = img_filename;
 
     }
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
     public int getComuna() {
-        return comuna;
+        return comuna_id;
     }
 
     public String getSector() {

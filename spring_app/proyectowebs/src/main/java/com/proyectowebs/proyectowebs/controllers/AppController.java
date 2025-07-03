@@ -22,6 +22,7 @@ public class AppController {
     @GetMapping("/")
     public String indexRoute(Model model) {
         List<Map<String, String>> modelData = appService.getActividadesData(5);
+        
         model.addAttribute("data", modelData);
         return "index";
     }

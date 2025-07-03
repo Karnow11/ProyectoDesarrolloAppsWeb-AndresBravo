@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.proyectowebs.proyectowebs.models.Actividad;
@@ -24,6 +25,7 @@ public class ApiService {
     private final ActividadRepository actividadRepository;
     private final Actividad_temaRepository actividad_temaRepository;
     private final ComunaRepository comunaRepository;
+
     public ApiService(
         ActividadRepository actividadRepository,
         Actividad_temaRepository actividad_temaRepository,
@@ -44,26 +46,27 @@ public class ApiService {
         return matchActividades;
     }
 
-    public List<Comuna> getComunabyId(int id) {
-        List<Comuna> comunas = comunaRepository.findAll();
-        List<Comuna> matchComunas = new ArrayList<Comuna>();
+    public Optional<Comuna> getComunaById(int id) {
+        List<Comuna> comunas = comunaRepository.findAll();  
         for (Comuna com : comunas) {
             if (com.getId() == id) {
-                matchComunas.add(com);
+                return Optional.of(com);
             }
         }
-        return matchComunas;
+        return Optional.empty();
     }
 
-    public List<Actividad_tema> getTemabyId(int id) {
+    public Optional<String> getTemaById(int id) {
         List<Actividad_tema> temas = actividad_temaRepository.findAll();
-        List<Actividad_tema> matchTemas = new ArrayList<Actividad_tema>();
         for (Actividad_tema tema : temas) {
-            if (tema.getId() == id) {
-                matchTemas.add(tema);
+            if (tema.getActividad_id() == id) {
+                if(tema.getTema() == "otro"){
+                    return Optional.of(tema.getGlosa_otro());
+                }
+                return Optional.of(tema.getTema());
             }
         }
-        return matchTemas;
+        return Optional.empty();
     }
 
     public List<Map<String, String>> getStatsData() {
