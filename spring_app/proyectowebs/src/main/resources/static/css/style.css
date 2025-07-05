@@ -20,6 +20,10 @@
 .table{
     width:100%;
     text-align: center;
+    border: 5px solid black;
+}
+.table th, .table td {
+    border: 1px solid black;
 }
 .button-container{
     align-items: center;

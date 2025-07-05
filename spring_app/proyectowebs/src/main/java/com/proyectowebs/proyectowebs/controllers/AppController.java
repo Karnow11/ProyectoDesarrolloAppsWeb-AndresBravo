@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.proyectowebs.proyectowebs.services.AppService;
 
@@ -69,8 +70,28 @@ public class AppController {
 
     @GetMapping("/vote")
     public String voteRoute(Model model) {
+        List<Map<String, String>> modelData = appService.getActividadesExpiradasData(Integer.MAX_VALUE);
+        model.addAttribute("data", modelData);
+        return "vote";
+    }
+
+    @GetMapping("/vote-index/{id}")
+    public String vote_indexRoute(@PathVariable("id") String id, Model model) {
         List<Map<String, String>> modelData = appService.getActividadesData(Integer.MAX_VALUE);
         model.addAttribute("data", modelData);
+        model.addAttribute("id", id);
+        return "vote-index";
+    }
+
+    @PostMapping("/vote-index/{id}")
+    public String vote_indexPostRoute(@PathVariable("id") String id, @RequestParam("radio") String radioValue, Model model) {
+        // Handle the vote submission logic here
+        try{
+            appService.handlePostNotaRequest(Integer.valueOf(id), Integer.valueOf(radioValue));
+        } catch (Exception e){
+            model.addAttribute("error", "Error al guardar la nota: " + e.getMessage());
+            model.addAttribute("id", id);
+        }
         return "vote";
     }
 

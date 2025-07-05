@@ -2,7 +2,7 @@
 <html lang ="es">
     <head>
         <title> Beauchef Activities</title>
-        <link rel="stylesheet" type ="text/css" th:href="@{/css/style.css}"></link>
+        <link rel="stylesheet" type ="text/css" th:href="@{/css/style.css}">
     </head>
     <body>
         <div class="container" id= "logo">
@@ -19,7 +19,7 @@
         </div>
         <div class="table-container" id="table-container">
             <div><h3>Aqui puedes ver las actividades recientes</h3></div>
-            <table border="1" class ="table">
+            <table class ="table">
                 <thead>
                     <tr>
                         <th>Inicio</th>
@@ -37,7 +37,7 @@
                         <td th:text = "${act['comuna']}"></td>
                         <td th:text = "${act['sector']}"></td>
                         <td th:text = "${act['tema']}"></td>
-                        <td><img th:src="@{${act['path_image']}}" width="320" height="240"></td>
+                        <td><img th:src="@{${act['path_image']} != null ? ${act['path_image']} : '/media/default.jpg'}" width="320" height="240" alt = "Nothing to see here"></td>
                     </tr>
                 </tbody>
             </table>

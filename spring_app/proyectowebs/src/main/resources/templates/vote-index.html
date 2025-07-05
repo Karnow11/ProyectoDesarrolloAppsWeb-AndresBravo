@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang ="es">
+    <head>
+        <title> Beauchef Activities</title>
+        <link rel="stylesheet" type ="text/css" th:href="@{/css/style.css}"></link>
+    </head>
+    <body>
+        <div class="container" id= "logo">
+            <h2>Beauchef Activities</h2>
+        </div>
+        <div class="container" id= "welcome_msg">  
+            <h4><p th:text="'Vota por la actividad ' + ${id} + ' en la que has participado!!!'"></p></h4>
+        </div>
+        <div class="container" id= "action_buttons">
+            <button id="index-button">Inicio</button>
+        </div>
+        
+        <form th:action="@{'/vote-index/' + ${id}}" method="post" id="vote_form">
+            <div>
+                <div id="pin_contact" class ="pin_contact" style = "justify-content: center; display:flex; flex-direction:row; gap: 10px;">
+                    <div id="1_box" class ="1_box">
+                        <input type="radio" id="1_checkbox" name="radio" value="1" title="Whatsapp">
+                        <label for="1_checkbox">1</label>
+                        <input type="radio" id="2_checkbox" name="radio" value="2">
+                        <label for="2_checkbox">2</label>
+                        <input type="radio" id="3_checkbox" name="radio" value="3">
+                        <label for="3_checkbox">3</label>
+                        <input type="radio" id="4_checkbox" name="radio" value="4">
+                        <label for="4_checkbox">4</label>
+                        <input type="radio" id="5_checkbox" name="radio" value="5">
+                        <label for="5_checkbox">5</label>
+                        <input type="radio" id="6_checkbox" name="radio" value="6">
+                        <label for="6_checkbox">6</label>
+                        <input type="radio" id="7_checkbox" name="radio" value="7">
+                        <label for="7_checkbox">7</label>
+                    </div>
+                </div>
+                <div style = "display: flex; justify-content: flex-end;">
+                    <button type = "button" id= "Cancel-button">Cancelar</button>
+                    <button type = "submit" id= "Vote-button">Votar</button>
+                </div>
+            </div>
+            
+        </form>
+    </body>
+    <script th:inline="javascript"> 
+        const ROUTES = {
+            index: /*[[@{/}]]*/,
+            vote: /*[[@{/vote}]]*/
+        }
+    </script>
+    <script th:src="@{/js/vote_index_scr.js}"></script>
+</html>

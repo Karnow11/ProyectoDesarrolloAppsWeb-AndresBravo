@@ -26,18 +26,25 @@ import com.proyectowebs.proyectowebs.models.ActividadRepository;
 import com.proyectowebs.proyectowebs.models.Comuna;
 import com.proyectowebs.proyectowebs.models.ComunaRepository;
 
+import com.proyectowebs.proyectowebs.models.Nota_actividad;
+import com.proyectowebs.proyectowebs.models.Nota_actividadRepository;
+
 @Service
 public class AppService {
 
     private final String pathStatic;
     private final ActividadRepository actividadRepository;
     private final ComunaRepository comunaRepository;
+    private final Nota_actividadRepository nota_actividadRepository;
     private final ApiService apiService;
 
-    public AppService(ApiService apiService, ActividadRepository actividadRepository, ComunaRepository comunaRepository) throws IOException {
+    public AppService(ApiService apiService, ActividadRepository actividadRepository, 
+    ComunaRepository comunaRepository, Nota_actividadRepository nota_actividadRepository) throws IOException {
         this.apiService = apiService;
         this.actividadRepository = actividadRepository;
         this.comunaRepository = comunaRepository;
+        this.nota_actividadRepository = nota_actividadRepository;
+
         // Dynamically resolve the absolute path for the static directory
         Path staticDir = Paths.get(ResourceUtils.getFile("classpath:static").getAbsolutePath());
         this.pathStatic = staticDir.toString();
@@ -47,10 +54,21 @@ public class AppService {
     public List<Map<String, String>> getActividadesData(Integer pageSize) {
         List<Actividad> Actividades = actividadRepository.findAllByOrderByIdDesc(PageRequest.of(0, pageSize)).getContent();
         List<Map<String, String>> actividadesData = new ArrayList<>();
-        
+    
         for (Actividad act : Actividades) {
             Optional<Comuna> comunaOpt = apiService.getComunaById(act.getComuna());
             Optional<String> temaOpt = apiService.getTemaById(act.getId());
+            Integer Nota = 0;
+            Integer Notas = 0;
+            List<Nota_actividad> notas = apiService.getNotasById(act.getId());
+            for(Nota_actividad nota : notas){
+                Nota += nota.getNota();
+                Notas++;
+            }
+            if (Notas != 0){
+                Nota = Nota/Notas;
+            }
+            System.out.println("Actividad ID: " + act.getId() + " | Suma notas: " + Nota + " | Cantidad notas: " + Notas);
             Map<String, String> actividadData = new HashMap<>();
             actividadData.put("id", "" + act.getId());
             actividadData.put("tema", temaOpt.orElse("Desconocido"));
@@ -63,6 +81,48 @@ public class AppService {
             actividadData.put("termino", act.getDia_hora_termino().toString());
             actividadData.put("descripcion", act.getDescripcion().toString());
             actividadData.put("image_filename", act.getImg());
+            actividadData.put("nota","" + (Nota != 0 ? Nota : "-"));
+
+            actividadesData.add(actividadData);
+        }
+        return actividadesData;
+    }
+
+
+    public List<Map<String, String>> getActividadesExpiradasData(Integer pageSize) {
+        List<Actividad> Actividades = actividadRepository.findAllByOrderByIdDesc(PageRequest.of(0, pageSize)).getContent();
+        List<Map<String, String>> actividadesData = new ArrayList<>();
+        
+        for (Actividad act : Actividades) {
+            if(act.getDia_hora_inicio().isAfter(LocalDateTime.now())) {
+                continue; // Skip expired activities
+            }
+            Optional<Comuna> comunaOpt = apiService.getComunaById(act.getComuna());
+            Optional<String> temaOpt = apiService.getTemaById(act.getId());
+            double Nota = 0.0;
+            double Notas = 0.0;
+            List<Nota_actividad> notas = apiService.getNotasById(act.getId());
+            for(Nota_actividad nota : notas){
+                Nota += nota.getNota();
+                Notas++;
+            }
+            if (Notas != 0){
+                Nota = Nota/Notas;
+            }
+
+            Map<String, String> actividadData = new HashMap<>();
+            actividadData.put("id", "" + act.getId());
+            actividadData.put("tema", temaOpt.orElse("Desconocido"));
+            actividadData.put("comuna", comunaOpt.map(Comuna::getNombre).orElse("Desconocida"));
+            actividadData.put("sector", act.getSector().toString());
+            actividadData.put("nombre", act.getNombre().toString());
+            actividadData.put("mail", act.getMail().toString());
+            actividadData.put("celular", act.getCelular().toString());
+            actividadData.put("inicio", act.getDia_hora_inicio().toString());
+            actividadData.put("termino", act.getDia_hora_termino().toString());
+            actividadData.put("descripcion", act.getDescripcion().toString());
+            actividadData.put("image_filename", act.getImg());
+            actividadData.put("nota", Nota != 0 ? String.format("%.2f", Nota) : "-");
 
             actividadesData.add(actividadData);
         }
@@ -82,6 +142,33 @@ public class AppService {
             }
         }
         return ComunasData;
+    }
+
+    public List<Map<String, String>> getNotaData(Long id) {
+        List<Nota_actividad> Notas = nota_actividadRepository.findAll();
+        List<Map<String, String>> NotasData = new ArrayList<>();
+        for (Nota_actividad nota : Notas) {
+            Map<String, String> notaData = new HashMap<>();
+            if (nota.getId() == id){
+                notaData.put("nota", "" + nota.getNota());
+                NotasData.add(notaData);
+            }
+        }
+        return NotasData;
+    }
+
+    public void handlePostNotaRequest(int id, int nota) throws Exception {
+        Optional<Actividad> actividadOpt = apiService.getActividadById(id);
+        if (actividadOpt.isPresent()) {
+            Actividad actividad = actividadOpt.get();
+            Nota_actividad notaActividad = new Nota_actividad();
+            notaActividad.setActividad_id(actividad.getId());
+            notaActividad.setNota(nota);
+            nota_actividadRepository.save(notaActividad);
+            System.out.println("Nota saved successfully for Actividad ID: " + id + " with nota: " + nota);
+        } else {
+            throw new IllegalArgumentException("Actividad with ID " + id + " does not exist.");
+        }
     }
 
     public void handlePostRequest(

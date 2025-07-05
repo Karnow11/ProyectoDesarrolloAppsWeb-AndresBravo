@@ -19,31 +19,35 @@ import com.proyectowebs.proyectowebs.models.Actividad_temaRepository;
 
 import com.proyectowebs.proyectowebs.models.Comuna;
 import com.proyectowebs.proyectowebs.models.ComunaRepository;
+import com.proyectowebs.proyectowebs.models.Nota_actividad;
+import com.proyectowebs.proyectowebs.models.Nota_actividadRepository;
 
 @Service
 public class ApiService {
     private final ActividadRepository actividadRepository;
     private final Actividad_temaRepository actividad_temaRepository;
     private final ComunaRepository comunaRepository;
+    private final Nota_actividadRepository nota_actividadRepository;
 
     public ApiService(
         ActividadRepository actividadRepository,
         Actividad_temaRepository actividad_temaRepository,
-        ComunaRepository comunaRepository) {
+        ComunaRepository comunaRepository,
+        Nota_actividadRepository nota_actividadRepository) {
         this.actividadRepository = actividadRepository;
         this.actividad_temaRepository = actividad_temaRepository;
         this.comunaRepository = comunaRepository;
+        this.nota_actividadRepository = nota_actividadRepository;
     }
 
-    public List<Actividad> getActividades(int id) {
+    public Optional<Actividad> getActividadById(int id) {
         List<Actividad> actividades = actividadRepository.findAll();
-        List<Actividad> matchActividades = new ArrayList<Actividad>();
         for (Actividad act : actividades) {
             if (act.getId() == id) {
-                matchActividades.add(act);
+                return Optional.of(act);
             }
         }
-        return matchActividades;
+        return Optional.empty();
     }
 
     public Optional<Comuna> getComunaById(int id) {
@@ -68,6 +72,20 @@ public class ApiService {
         }
         return Optional.empty();
     }
+
+    public List<Nota_actividad> getNotasById(int id) {
+        List<Nota_actividad> notas = nota_actividadRepository.findAll();
+
+        List<Nota_actividad> resultado = new ArrayList<>();
+
+        for (Nota_actividad nota : notas) {
+            if (nota.getActividad_id() == id) {
+                resultado.add(nota);
+            }
+        }
+        return resultado;
+    }
+
 
     public List<Map<String, String>> getStatsData() {
         // Define the start and end date

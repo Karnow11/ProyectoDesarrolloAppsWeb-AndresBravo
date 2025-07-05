@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang ="es">
     <head>
+        <meta charset="UTF-8">
         <title> Beauchef Activities</title>
-        <link rel="stylesheet" type ="text/css" th:href="@{/css/style.css}"></link>
+        <link rel="stylesheet" type ="text/css" th:href="@{/css/style.css}">
     </head>
     <body>
         <div class="container" id= "logo">
@@ -16,7 +17,7 @@
         </div>
         <div class="table-container" id="table-container">
             <div><h3>Listado de Actividades</h3></div>
-            <table border="1" class ="table">
+            <table class ="table">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -26,17 +27,47 @@
                         <th>Tema</th>
                         <th>Nota</th>
                         <th>Votar</th>
+                        <th id = "votar2-col" style = "display: none">Notas</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="act : ${data}">
                         <td th:text = "${act['id']}"></td>
-                        <td th:text = "${act['inicio']}"></td>
+                        <td th:text = "${act['inicio'].substring(0,10)}"></td>
                         <td th:text = "${act['sector']}"></td>
                         <td th:text = "${act['nombre']}"></td>
                         <td th:text = "${act['tema']}"></td>
-                        <td><img th:src="@{${act['nota']}}"></td>
-                        <td><button id = "vote-button">Votar</button></td>
+                        <td th:id = "'nota_td_' + ${act['id']}" th:text="${act['nota']}"></td>
+                        <td><button th:id="'vote_button_' + ${act['id']}" th:attr="data-act-id=${act['id']}">Evaluar2</button></td>
+                        <td th:id="'form_cell_' + ${act['id']}" style = "display: none">
+                            <form th:action="@{'/vote-index/' + ${act['id']}}" method="post" th:id="'vote_form_' + ${act['id']}">
+                                <input type = "hidden" th:name="'act_id'" th:value="${act['id']}">
+                                <div>
+                                    <div style = "justify-content: center; display:flex; flex-direction:row; gap: 10px;">
+                                        <div>
+                                            <input type="radio" name="radio" value="1" title="Whatsapp">
+                                            <label>1</label>
+                                            <input type="radio" name="radio" value="2">
+                                            <label>2</label>
+                                            <input type="radio" name="radio" value="3">
+                                            <label>3</label>
+                                            <input type="radio" name="radio" value="4">
+                                            <label>4</label>
+                                            <input type="radio" name="radio" value="5">
+                                            <label>5</label>
+                                            <input type="radio" name="radio" value="6">
+                                            <label>6</label>
+                                            <input type="radio" name="radio" value="7">
+                                            <label>7</label>
+                                        </div>
+                                    </div>
+                                    <div style = "display: flex; justify-content: flex-end;">
+                                        <button type = "button" name= "Cancel-button">Cancelar</button>
+                                        <button type = "submit" th:id= "'submit_button_' + ${act['id']}">Votar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -46,7 +77,8 @@
                 addAct: /*[[@{/add-act}]]*/,
                 list: /*[[@{/list}]]*/,
                 stats: /*[[@{/stats}]]*/,
-                vote: /*[[@{/vote}]]*/
+                vote: /*[[@{/vote}]]*/,
+                index: /*[[@{/}]]*/,
             }
         </script>
         <script th:src="@{/js/vote_scr.js}"></script>

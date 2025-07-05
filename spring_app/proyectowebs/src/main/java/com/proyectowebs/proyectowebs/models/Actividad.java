@@ -2,8 +2,6 @@ package com.proyectowebs.proyectowebs.models;
 
 import java.time.LocalDateTime;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -111,7 +109,7 @@ public class Actividad{
         return celular;
     }
     public String getImg(){
-        return "Por ahora nada"; // Placeholder para image filename
+        return null; // Placeholder para image filename
     }
     public LocalDateTime getDia_hora_inicio() {
         return dia_hora_inicio;
