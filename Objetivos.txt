@@ -14,3 +14,19 @@ Objetivos:
 -Nueva Interfaz: Evaluación de actividades -> Actividades expiradas con ID-Fecha Inicio-Sector-Nombre-Tema-Nota(promedio evaluaciones actuales)
 -Evaluar -> Columna de evaluar es un boton clickeable para poner nota-> Nota se actualiza dinamicamente-> Asincrono con js
 -
+
+.------------------------------------------------------------------------------------------------------------------------------------------------------------
+Objetivos Examen --> Usar sprin Security
+-Crear administrador de fotos-> Nueva interfaz: /admin-fotos -> Despliega un listado con nombre actividad solo para admins,
+foto y correo. Boton eliminar foto-> Solicita texto con los motivos(largo min 5 max 200)-> Borra la foto de la tabla fotos
+-> Dejar registro de la eliminación en la tabla log insertando mensaje 
+"Eliminado foto {id-foto} por usuario admin, motivo:{motivo}",
+-> Solo puede entrar a al admin de fotos un user con usuario "admin" y contraseña "examen"
+
+-> Interfez /log  -> Solo para admin -> Despliega en orden lo de la tabla log (id,fecha,mensaje) -> de reciente a antigua
+
+Admin-User Controllers muestran las rutas user y admin
+-> Controllers y models nuevos del aux
+-> Falta definir los nuevos html de error,forbidden, register, user,admin, el login creo que viene por defecto con el proyecto
+
+-----------------------------------------------------------------------------------------------------------------------------------------
