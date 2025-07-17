@@ -33,9 +33,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // Esto viene por defecto, pero nosotros lo desactivamos por simplicidad
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/register", "/css/**", "/svg/**").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN") // sin "ROLE_" en hasRole
-                .requestMatchers("/user/**").hasRole("USER") 
-                .anyRequest().authenticated()
+                .requestMatchers("/admin/**", "/admin-fotos", "log").hasRole("ADMIN") // sin "ROLE_" en hasRole 
             )
             .formLogin(form -> form
                 .successHandler(successHandler())

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang ="es">
+    <head>
+        <meta charset="UTF-8">
+        <title> Beauchef Activities</title>
+        <link rel="stylesheet" type ="text/css" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <div class="container" id= "logo">
+            <h2>Beauchef Activities</h2>
+        </div>
+        <div class="container" id= "welcome_msg">  
+            <h4>Bienvenido a la galería de fotos para los administradores!</h4>
+        </div>
+        <div class="container" id= "action_buttons">
+            <button id="index-button">Inicio</button>
+        </div>
+
+        <div class="table-container" id="table-container">
+            <div><h3>Aqui puedes ver las actividades recientes</h3></div>
+            <table class ="table">
+                <thead>
+                    <tr>
+                        <th>Nombre Actividad</th>
+                        <th>Foto</th>
+                        <th>Correo contacto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="act : ${data}">
+                        <td th:text = "${act['nombre']}"></td>
+                        <td><img th:src="@{${act['path_image']} != null ? ${act['path_image']} : '/media/default.jpg'}" width="320" height="240" alt = "Nothing to see here"></td>
+                        <td th:text = "${act['mail']}"></td>
+                        <td><button th:id="'elim_button_' + ${act['id']}" th:attr="data-act-id=${act['id']}">Eliminar Foto</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <script th:inline="javascript"> 
+            const ROUTES = {
+                addAct: /*[[@{/add-act}]]*/,
+                list: /*[[@{/list}]]*/,
+                stats: /*[[@{/stats}]]*/,
+                vote: /*[[@{/vote}]]*/,
+                index: /*[[@{/}]]*/,
+            }
+        </script>
+        <script th:src="@{/js/admin-fotos_scr.js}"></script>
+    </body>
+
+</html>

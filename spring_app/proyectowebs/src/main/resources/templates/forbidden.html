@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang ="es">
+    <head>
+        <meta charset="UTF-8">
+        <title> Beauchef Activities</title>
+        <link rel="stylesheet" type ="text/css" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <div class="container" id= "logo">
+            <h2>Beauchef Activities</h2>
+        </div>
+        <div class="container" id= "welcome_msg">  
+            <h4>No tienes permisos para ir a la pagina seleccionada, porfavor vuelve por donde viniste 🙂</h4>
+        </div>
+        <div class="container" id= "action_buttons">
+            <button id="index-button">Inicio</button>
+        </div>
+        
+        <script th:inline="javascript"> 
+            const ROUTES = {
+                addAct: /*[[@{/add-act}]]*/,
+                list: /*[[@{/list}]]*/,
+                stats: /*[[@{/stats}]]*/,
+                vote: /*[[@{/vote}]]*/,
+                index: /*[[@{/}]]*/,
+            }
+        </script>
+        <script th:src="@{/js/forbidden_scr.js}"></script>
+    </body>
+
+</html>
